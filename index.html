@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Romagnoli frentani - Evidenze storiche e spunti di ricerca | Documenti Digitali</title>
+  <meta name="description" content="Repository digitale del libro 'I Romagnoli frentani - Evidenze storiche e spunti di ricerca' di Federico Romagnoli. Documenti storici e materiali integrativi." />
+  <meta property="og:title" content="I Romagnoli frentani - Evidenze storiche e spunti di ricerca" />
+  <meta property="og:description" content="Documenti digitali del libro di Federico Romagnoli" />
+
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --bg-light: #ecf0f1;
+      --text-dark: #333;
+      --shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body { 
+      font-family: Georgia, serif; 
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: #f8f9fa;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background: white;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    h1 { 
+      color: var(--primary-color);
+      margin: 0;
+      font-size: 2em;
+    }
+
+    .book-info {
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .hero h2 {
+      margin: 0 0 20px 0;
+      font-size: 2.5em;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      max-width: 800px;
+      margin: 0 auto 20px;
+    }
+
+    .quick-links {
+      background: white;
+      padding: 40px 0;
+      margin: -40px 0 40px 0;
+      position: relative;
+      box-shadow: var(--shadow);
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .link-card {
+      background: var(--bg-light);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .link-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .link-card h3 {
+      color: var(--primary-color);
+      margin: 10px 0;
+    }
+
+    .instructions {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 40px 0;
+    }
+
+    .instructions h3 {
+      margin-top: 0;
+      color: #856404;
+    }
+
+    .main-content {
+      background: white;
+      padding: 40px 0;
+      margin: 40px 0;
+      box-shadow: var(--shadow);
+    }
+
+    .section {
+      margin: 40px 0;
+    }
+
+    .section h2 {
+      color: var(--primary-color);
+      border-bottom: 3px solid var(--secondary-color);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .section h3 {
+      color: var(--primary-color);
+      margin: 25px 0 15px 0;
+    }
+
+    .document-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .document-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .document-list li:last-child {
+      border-bottom: none;
+    }
+
+    .doc-link {
+      color: var(--secondary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .doc-link:hover { color: var(--accent-color); }
+
+    .external-link::after {
+      content: " ↗";
+      font-size: 0.8em;
+    }
+
+    footer {
+      background: var(--primary-color);
+      color: white;
+      padding: 40px 0;
+      margin-top: 80px;
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--secondary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 5px;
+    }
+
+    .btn:hover { background: var(--accent-color); }
+
+    @media (max-width: 768px) {
+      .hero h2 { font-size: 1.8em; }
+      .header-content { text-align: center; }
+      h1 { font-size: 1.5em; }
+    }
+
+    /* Sezione Atti Notarili e Galleria */
+    #elencoAttiNotarili .atto {
+      cursor: pointer;
+      margin-bottom: 6px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+    #elencoAttiNotarili .atto:hover { background: #f0f4f8; }
+    #titoloAtto {
+      margin-top: 20px;
+      color: var(--primary-color);
+      font-size: 1.2em;
+    }
+    #galleria {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #galleria img {
+      max-width: 150px;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .galleria-attuale {
+      margin-top: 8px;
+      display: none;
+    }
+    .galleria-attuale img {
+      border: 1px solid #999;
+      border-radius: 4px;
+      max-width: 150px;
+      margin: 5px;
+      vertical-align: middle;
+    }
+  
+/* --- Galleria: zoom e pan --- */
+#imageOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+  overflow: hidden;
+}
+
+#overlayImg {
+  max-width: 90%;
+  max-height: 90%;
+  transform-origin: center center;
+  transition: transform 0.1s ease;
+}
+
+/* Overlay per immagine ingrandita (zoom + pan) */
+#imageOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+  overflow: hidden;
+}
+#imageOverlay.active { display: flex; }
+
+#overlayImg {
+  max-width: 90%;
+  max-height: 90%;
+  transform-origin: center center;
+  transition: transform 0.06s linear;
+  will-change: transform;
+  user-select: none;
+  touch-action: none; /* necessario per pointer events su touch */
+  box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+  border-radius: 4px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header> </header>
+<div class="container">
+<div class="header-content">
+<h1>I Romagnoli frentani</h1>
+<div class="book-info"> <strong>Federico Romagnoli</strong><br/>
+ISBN: ........... | DOI: --.-----/zenodo.------- </div>
+</div>
+</div>
+<div class="hero">
+<div class="container">
+<h2>Documenti Digitali</h2>
+<p>Repository completo dei documenti storici e materiali citati
+nel libro<br/>
+"I Romagnoli frentani - Evidenze storiche e spunti di ricerca"</p>
+<p><em>Prima Edizione: Ottobre 2025</em></p>
+</div>
+</div>
+<div class="quick-links">
+<div class="container">
+<h2 style="text-align: center; margin-bottom: 30px;">Accesso Rapido</h2>
+<div class="links-grid">
+<div class="link-card">
+<h3>📋 Catasti onciari</h3>
+<p>Napoli 1743-47 e Lanciano 1618</p>
+<a class="btn" href="#catasti-onciari">Vai agli atti</a> </div>
+<div class="link-card">
+<h3>📚 Altre fonti storiche</h3>
+<p>Atto del 1719 e Catalogo Ancona</p>
+<a class="btn" href="#altre-fonti-storiche">Vai alle fonti</a> </div>
+<div class="link-card">
+<h3>📑 Documenti vari, link</h3>
+<p>Documenti vari e risorse esterne</p>
+<a class="btn" href="#documenti-link">Vai alle mappe</a> </div>
+<div class="link-card">
+<h3>📜 Atti notarili del '700</h3>
+<p>I Romagnoli nel '700<br/>
+</p>
+<a class="btn" href="#atti-notarili-700">Vai ai documenti</a> </div>
+</div>
+</div>
+</div>
+<main class="container"><div class="instructions" style="padding-left: 20px;">
+<h3>📖 Come utilizzare questo repository</h3>
+<p><strong>Per i lettori del libro:</strong></p>
+<ol>
+<li>Trova il riferimento nel libro (es: "Catasto di Lanciano del 1618")</li>
+<li>Cerca il documento corrispondente in questa pagina</li>
+<li>Clicca sul link per visualizzare o scaricare il documento</li>
+</ol>
+</div><div class="main-content" style="padding-left: 20px;"> <section class="section" id="catasti-onciari">
+</section>
+<h2>📋 Catasti onciari</h2>
+</h2>
+<h3>Catasto del Regno di Napoli</h3>
+<p><em>1743 Mozzagrogna e 1747 Lanciano</em></p>
+<ul class="document-list">
+<li> <a class="doc-link" href="documenti/atti/1719%20%28De%20Luca%29%20-%20Silvestro%20Romagnoli%20%28dichiarazione%29.pdf" target="_blank">
+<strong>1719</strong> - Dichiarazione genealogica
+di Silvestro Romagnoli (Notaio Berardo De Luca) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1742%20%28Muzzini%20T%29%20-%20Cittadini%20di%20Mozzagrogna%20e%20S.%20M.%20Imbaro%20per%20indipendenza%20sul%20Catasto%20del%201743.pdf" target="_blank">
+<strong>1742</strong> - Richiesta catasto
+separato da Lanciano, cittadini di Mozzagrogna e S. Maria Imbaro (Notaio T. Muzzini) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1749 (Muzzini T) - Giovanni di Leonardo Romagnoli e 2 cugini vs Mancini (72 tomoli).pdf" target="_blank">
+<strong>1749</strong> - Contratto di enfiteusi (24 ettari) Romagnoli vs Mancini (Notaio T. Muzzini)</a> </li>
+<li> <a class="doc-link" href="documenti/atti/1769 (Renzetti F P) - Pasquale Romagnoli (Fattore) vs Di Crecchio.pdf" target="_blank">
+<strong>1769</strong> - Pasquale Romagnoli alias Fattore vs Di Crecchio (Notaio F.P. Renzetti) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1782%20%28Muzzini%20T%29%20-%20Silvestro%20Romagnoli%20di%20Stefano%20vs%20S%20M%20Vittoria%20e%20S%20Gennaro.pdf" target="_blank">
+<strong>1782</strong> - Estinzione prestito
+Cappella S. Vittoria e S. Gennaro (Notaio T. Muzzini) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1783 (Ciccarelli) - Nicola Romagnoli (Fattore) vs M Ponte.pdf" target="_blank">
+<strong>1783</strong> - Nicola Romagnoli alias Fattore vs Chiesa Madonna del Ponte (Notaio Ciccarelli) </a> </li>
+</ul>
+<h3>Catasto del Comune di Lanciano</h3>
+<p><em>1618 Lanciano e le sue Ville</em></p>
+<ul class="document-list">
+<li> <a class="doc-link" href="documenti/atti/1719%20%28De%20Luca%29%20-%20Silvestro%20Romagnoli%20%28dichiarazione%29.pdf" target="_blank">
+<strong>1719</strong> - Dichiarazione genealogica
+di Silvestro Romagnoli (Notaio Berardo De Luca) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1742%20%28Muzzini%20T%29%20-%20Cittadini%20di%20Mozzagrogna%20e%20S.%20M.%20Imbaro%20per%20indipendenza%20sul%20Catasto%20del%201743.pdf" target="_blank">
+<strong>1742</strong> - Richiesta catasto
+separato da Lanciano, cittadini di Mozzagrogna e S. Maria Imbaro (Notaio T. Muzzini) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1749 (Muzzini T) - Giovanni di Leonardo Romagnoli e 2 cugini vs Mancini (72 tomoli).pdf" target="_blank">
+<strong>1749</strong> - Contratto di enfiteusi (24 ettari) Romagnoli vs Mancini (Notaio T. Muzzini)</a> </li>
+<li> <a class="doc-link" href="documenti/atti/1769 (Renzetti F P) - Pasquale Romagnoli (Fattore) vs Di Crecchio.pdf" target="_blank">
+<strong>1769</strong> - Pasquale Romagnoli alias Fattore vs Di Crecchio (Notaio F.P. Renzetti) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1782%20%28Muzzini%20T%29%20-%20Silvestro%20Romagnoli%20di%20Stefano%20vs%20S%20M%20Vittoria%20e%20S%20Gennaro.pdf" target="_blank">
+<strong>1782</strong> - Estinzione prestito
+Cappella S. Vittoria e S. Gennaro (Notaio T. Muzzini) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1783 (Ciccarelli) - Nicola Romagnoli (Fattore) vs M Ponte.pdf" target="_blank">
+<strong>1783</strong> - Nicola Romagnoli alias Fattore vs Chiesa Madonna del Ponte (Notaio Ciccarelli) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1769 (Renzetti F P) - Pasquale Romagnoli (Fattore) vs Di Crecchio.pdf" target="_blank">
+<strong>1769</strong> - Pasquale Romagnoli alias Fattore vs Di Crecchio (Notaio F.P. Renzetti) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1782%20%28Muzzini%20T%29%20-%20Silvestro%20Romagnoli%20di%20Stefano%20vs%20S%20M%20Vittoria%20e%20S%20Gennaro.pdf" target="_blank">
+<strong>1782</strong> - Estinzione prestito
+Cappella S. Vittoria e S. Gennaro (Notaio T. Muzzini) </a> </li>
+<li> <a class="doc-link" href="documenti/atti/1783 (Ciccarelli) - Nicola Romagnoli (Fattore) vs M Ponte.pdf" target="_blank">
+<strong>1783</strong> - Nicola Romagnoli alias Fattore vs Chiesa Madonna del Ponte (Notaio Ciccarelli) </a> </li>
+</ul>
+<section class="section" id="altre-fonti-storiche"></section>
+<h2>📚 Altre fonti storiche<br/>
+</h2>
+<h3>L'atto notarile del 25 marzo 1719</h3>
+<p><em>Dichiarazione di Costanzo Silvestro Romagnoli. Notaio Berardo De Luca di Lanciano</em></p>
+<ul class="document-list">
+<li> <a class="doc-link" href="fonti/antinori/383.jpg" target="_blank"> <strong>Pagina
+383</strong> - Il perduto castello di Belvedere </a> </li>
+<li> <a class="doc-link" href="fonti/antinori/384.jpg" target="_blank"> <strong>Pagina
+384</strong> - Cappellani della Chiesa di S. Andrea (1374-1393) </a> </li>
+<li> <a class="doc-link" href="fonti/antinori/387.jpg" target="_blank"> <strong>Pagina
+387</strong> - Villa di Giovanni Tommaso Mazzograsso (1528-1595) </a> </li>
+<li> <a class="doc-link" href="fonti/antinori/388.jpg" target="_blank"> <strong>Pagina
+388</strong> - Chiesa di S. Rocco e popolazione delle Ville (1595) </a>
+</li>
+<li> <a class="doc-link" href="fonti/antinori/389.jpg" target="_blank"> <strong>Pagina
+389</strong> - Villa romana dei Cesia a Santa Maria Imbaro </a> </li>
+<li> <a class="doc-link" href="fonti/antinori/390.jpg" target="_blank"> <strong>Pagina
+390</strong> - Ritrovamento urna cineraria "OSSA MEMMI⸮" presso Villa
+Romagnuolo </a> </li>
+<h3>L'atto notarile del 25 marzo 1719</h3>
+<p><em>Costanzo Silvestro Romagnoli dal notaio Berardo De Luca</em></p>
+<li> <a class="doc-link" href="fonti/carabba/Regi%20Tabulari.jpg" target="_blank"> <strong>Regi
+Tabulari 1573</strong> - Villa Mozzagrogna (da F. Carabba, p. 211) </a>
+</li>
+</ul>
+<h3>Catalogo dei morti della Citta di Ancona</h3>
+<em>I Romagnoli e i D'Ancona Anni 1554-1589 e 1590-1599</em>
+<ul class="document-list">
+<li> <a class="doc-link" href="fonti/pacichelli/1703_Pacichelli.pdf" target="_blank">
+<strong>Del Regno di Napoli</strong> - Menzione di "Bonagnoli"
+(1703, p. 9) </a> </li>
+</ul>
+<section class="section" id="documenti-link"> </section>
+<h2>📑 Documenti vari, link</h2>
+<p><em>Documenti vari e risorse esterne</em></p>
+<h3>Documenti</h3>
+<ul class="document-list">
+<li> <a class="doc-link external-link" href="http://www.asciatopo.altervista.org/sanvito.html" target="_blank">
+<strong>Pagina
+generale</strong> - Geo-storia Costa dei Trabocchi </a>
+<ul style="margin-left: 30px; margin-top: 10px;">
+<li>Evoluzione territoriale completa (1180-1860)</li>
+</ul>
+</li>
+<h3>Link consultati</h3>
+<ul class="document-list">
+<li> <a class="external-link" href="http://www.asciatopo.altervista.org/geostoria.html" target="_blank"> Antonio Sciarretta: Atlante
+Storico d'Abruzzo </a> </li>
+<li> <a class="external-link" href="https://comunemozzagrogna.it/web/vivere-la-citta/cenni-storici-origini-evoluzione/" target="_blank"> Comune di Mozzagrogna: Cenni
+storici </a> </li>
+<li> <a class="external-link" href="https://www.provinciachieti.com/comuni/Mozzagrogna.asp" target="_blank"> Comune di Mozzagrogna: Cenni
+storici </a> </li>
+<li> <a class="external-link" href="https://www.familysearch.org/it/" target="_blank"> FamilySearch - Trova la tua famiglia. Scopri te stesso </a>
+</li>
+<li> <a class="external-link" href="https://gallica.bnf.fr/ark:/12148/btv1b53177632g/f1.item.zoom" target="_blank"> Gallica - Bibliothèque
+nationale de France: Carte du Royaume de Naples (A.H. Jaillot, 1706) </a>
+</li>
+<li> <a class="external-link" href="https://giosamenna.wordpress.com/2020/01/06/il-basso-sangro-in-una-cartografia-del-1702-osservazioni-e-note-storiche-parte-i/" target="_blank"> Giosia Menna: Il Basso Sangro
+in una cartografia del 1702 </a> </li>
+<li> <a class="external-link" href="https://www.gruppoarcheologicokr.it/biblioteca/g-a-rizzi-zannoni-atlante-geografico-del-regno-di-napoli-tavola-n-31-1808/" target="_blank"> Gruppo Archeologico Krotoniate:
+Atlante Rizzi Zannoni (1808) </a> </li>
+<li> <a class="external-link" href="http://www.instoria.it/home/abruzzo_XVII_secolo_epidemia_peste.htm" target="_blank"> InStoria: L'Abruzzo nel XVII
+secolo - l'epidemia di peste </a> </li>
+<li> <a class="external-link" href="https://catalogo.beniculturali.it/detail/ArchitecturalOrLandscapeHeritage/1600377037" target="_blank"> Ministero della Cultura:
+Palazzo Mozzagrugno - Lucera </a> </li>
+<li> <a class="external-link" href="https://it.wikipedia.org/wiki/Abbazia_di_Santa_Maria_della_Vittoria" target="_blank"> Wikipedia: Abbazia di Santa
+Maria della Vittoria </a> </li>
+<li> <a class="external-link" href="https://it.wikipedia.org/wiki/Ank%C3%B3n" target="_blank">
+Wikipedia: Ancona </a> </li>
+<li> <a class="external-link" href="https://it.wikipedia.org/wiki/Chiesa_di_San_Rocco_%28Mozzagrogna%29" target="_blank"> Wikipedia: Chiesa di San Rocco
+(Mozzagrogna) </a> </li>
+<li> <a class="external-link" href="https://it.wikipedia.org/wiki/Gaio_Memmio" target="_blank">
+Wikipedia: Gaio Memmio </a> </li>
+<li> <a class="external-link" href="https://it.wikipedia.org/wiki/Gens_Caesia" target="_blank">
+Wikipedia: Gens Caesia </a> </li>
+<li> <a class="external-link" href="https://it.wikipedia.org/wiki/Storia_della_Romagna" target="_blank"> Wikipedia: Storia della Romagna </a> </li>
+<li> <a class="external-link" href="https://it.wikipedia.org/wiki/Storia_di_Lanciano" target="_blank">
+Wikipedia: Storia di Lanciano </a>
+</li>
+<li> <a class="external-link" href="https://it.wikipedia.org/wiki/Santa_Maria_Imbaro" target="_blank">
+Wikipedia: Santa Maria Imbaro </a>
+</li>
+<li> <a class="external-link" href="https://it.wikipedia.org/wiki/Terremoto_dell%27Italia_centro-meridionale_del_1456" target="_blank"> Wikipedia: Terremoto
+dell'Italia centro-meridionale del 1456 </a> </li>
+</ul>
+<section class="section" id="atti-notarili-700"></section>
+
+
+<section class="section" id="atti-notarili">
+      <h2>📜 Atti notarili del '700</h2>
+      <div id="atti-container"></div>
+      <div id="elencoAttiNotarili"></div>
+      <h3 id="titoloAtto"></h3>
+      <div id="galleria"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><strong>I Romagnoli frentani - Evidenze storiche e spunti di ricerca</strong><br />
+      © 2025 Federico Romagnoli. Tutti i diritti riservati.</p>
+    </div>
+  </footer>
+
+<!-- Overlay per immagini ingrandite -->
+<div id="imageOverlay" aria-hidden="true" role="dialog" tabindex="-1">
+  <img id="overlayImg" src="" alt="Immagine ingrandita" />
+</div>
+
+  <script>
+document.addEventListener('DOMContentLoaded', () => {
+  const elenco = document.getElementById('elencoAttiNotarili');
+  const overlay = document.getElementById('imageOverlay');
+  const overlayImg = document.getElementById('overlayImg');
+
+  // stato zoom/pan
+  let scale = 1;
+  const minScale = 1;
+  const maxScale = 6;
+  let posX = 0, posY = 0;
+
+  // pointer (drag) state
+  let isPointerDown = false;
+  let pointerStartX = 0, pointerStartY = 0;
+  let startPosX = 0, startPosY = 0;
+
+  function updateTransform() {
+    overlayImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  }
+
+  function openOverlay(src) {
+    overlayImg.src = src;
+    scale = 1; posX = 0; posY = 0;
+    updateTransform();
+    overlay.classList.add('active');
+    overlay.style.display = 'flex';
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden'; // evita scroll della pagina dietro overlay
+  }
+
+  function closeOverlay() {
+    overlay.classList.remove('active');
+    overlay.style.display = 'none';
+    overlayImg.src = '';
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  // Carica atti.json e costruisce le miniature (come prima), ma con encodeURI per i path con spazi
+  fetch('atti.json')
+    .then(res => { if(!res.ok) throw new Error('Impossibile caricare atti.json'); return res.json(); })
+    .then(data => {
+      data.forEach(atto => {
+        const div = document.createElement('div');
+        div.className = 'atto';
+
+        const titoloDiv = document.createElement('div');
+        titoloDiv.textContent = atto.titolo;
+        titoloDiv.style.cursor = 'pointer';
+
+        const galleria = document.createElement('div');
+        galleria.className = 'galleria-attuale';
+        galleria.style.display = 'none';
+
+        titoloDiv.onclick = () => {
+          galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
+          if (galleria.childElementCount === 0 && Array.isArray(atto.immagini)) {
+            atto.immagini.forEach(img => {
+              const imgElem = document.createElement('img');
+              // encodeURI per gestire spazi e caratteri
+              imgElem.src = encodeURI(`atti del 700/${atto.cartella}/${img}`);
+              imgElem.alt = atto.titolo || '';
+              imgElem.style.maxWidth = '150px';
+              imgElem.style.margin = '5px';
+              imgElem.style.cursor = 'zoom-in';
+              galleria.appendChild(imgElem);
+            });
+          }
+        };
+
+        div.appendChild(titoloDiv);
+        div.appendChild(galleria);
+        elenco.appendChild(div);
+      });
+    })
+    .catch(err => {
+      console.error(err);
+      // facoltativo: mostra un messaggio di errore in pagina
+    });
+
+  // Event delegation: se clicchi su una <img> dentro "elenco" -> apri overlay
+  elenco.addEventListener('click', (ev) => {
+    const img = ev.target.closest && ev.target.closest('img');
+    if (!img) return;
+    ev.preventDefault();
+    openOverlay(img.src);
+  });
+
+  // Chiudi cliccando sullo sfondo (ma non se clicchi l'immagine)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeOverlay();
+  });
+
+  // ESC per chiudere
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeOverlay();
+  });
+
+  // Zoom con la rotellina: zoom verso il punto del cursore
+  overlay.addEventListener('wheel', (e) => {
+    if (!overlay.classList.contains('active')) return;
+    e.preventDefault();
+    const rect = overlayImg.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const prevScale = scale;
+    const zoomFactor = (e.deltaY < 0) ? 1.12 : 0.88;
+    scale = Math.max(minScale, Math.min(maxScale, scale * zoomFactor));
+
+    // aggiusta pos per zoom verso il punto del cursore
+    posX -= (mx - rect.width / 2) * (scale / prevScale - 1);
+    posY -= (my - rect.height / 2) * (scale / prevScale - 1);
+
+    updateTransform();
+  }, { passive: false });
+
+// Pan (trascinamento) con inerzia e limiti ai bordi
+let velocityX = 0, velocityY = 0;
+let lastX = 0, lastY = 0;
+let lastTime = 0;
+let inertiaFrame;
+
+overlayImg.addEventListener('pointerdown', (e) => {
+  isPointerDown = true;
+  cancelAnimationFrame(inertiaFrame);
+  overlayImg.setPointerCapture(e.pointerId);
+  pointerStartX = e.clientX;
+  pointerStartY = e.clientY;
+  startPosX = posX;
+  startPosY = posY;
+  lastX = e.clientX;
+  lastY = e.clientY;
+  lastTime = performance.now();
+  overlay.style.cursor = 'grabbing';
+});
+
+overlayImg.addEventListener('pointermove', (e) => {
+  if (!isPointerDown) return;
+
+  const now = performance.now();
+  const dt = now - lastTime;
+  lastTime = now;
+
+  const dx = e.clientX - lastX;
+  const dy = e.clientY - lastY;
+  lastX = e.clientX;
+  lastY = e.clientY;
+
+  // velocità pixel/ms (serve per inerzia)
+  velocityX = dx / dt;
+  velocityY = dy / dt;
+
+  const speedFactor = 3.5 * Math.max(1, scale);
+  posX = startPosX + (e.clientX - pointerStartX) * speedFactor;
+  posY = startPosY + (e.clientY - pointerStartY) * speedFactor;
+
+  updateTransform();
+});
+
+overlayImg.addEventListener('pointerup', (e) => {
+  isPointerDown = false;
+  try { overlayImg.releasePointerCapture(e.pointerId); } catch (err) {}
+  overlay.style.cursor = 'grab';
+
+  // applica inerzia dopo il rilascio
+  const friction = 0.94; // minore = più lunga l’inerzia
+  const step = () => {
+    posX += velocityX * 30; // moltiplica per la velocità residua
+    posY += velocityY * 30;
+    velocityX *= friction;
+    velocityY *= friction;
+
+    // ferma quando la velocità è minima
+    if (Math.abs(velocityX) < 0.01 && Math.abs(velocityY) < 0.01) return;
+
+    limitToBounds();
+    updateTransform();
+    inertiaFrame = requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+});
+
+overlayImg.addEventListener('pointercancel', () => {
+  isPointerDown = false;
+  overlay.style.cursor = 'grab';
+});
+
+// Impedisce che la foto "scappi via" oltre lo schermo
+function limitToBounds() {
+  const rect = overlayImg.getBoundingClientRect();
+  const overW = Math.max(0, (rect.width - window.innerWidth) / 2);
+  const overH = Math.max(0, (rect.height - window.innerHeight) / 2);
+  posX = Math.min(overW, Math.max(-overW, posX));
+  posY = Math.min(overH, Math.max(-overH, posY));
+}
+
+  // Doppio click: toggle zoom / reset
+  overlayImg.addEventListener('dblclick', () => {
+    if (scale > 1) { scale = 1; posX = 0; posY = 0; }
+    else { scale = 2; } // apri al 200%
+    updateTransform();
+  });
+});
+</script>
+
+</body>
+</html>
