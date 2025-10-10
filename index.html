@@ -572,7 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
             atto.immagini.forEach(img => {
               const imgElem = document.createElement('img');
               // encodeURI per gestire spazi e caratteri
-              imgElem.src = encodeURI(`atti del 700/${atto.cartella}/${img}`);
+              imgElem.src = encodeURI(`atti_del_700/${atto.cartella}/${img}`);
               imgElem.alt = atto.titolo || '';
               imgElem.style.maxWidth = '150px';
               imgElem.style.margin = '5px';
