@@ -576,9 +576,6 @@ fetch('altre_fonti.json')
   .catch(err => console.error(err));
 
 
-
-
-
 // ==========================================================
 // LOGICA UNIFICATA PER CATASTI ONCIARI (catasti.json)
 // ==========================================================
@@ -587,81 +584,64 @@ fetch('altre_fonti.json')
 
 const BASE_FOLDER_CATASTI = 'catasti_onciari'; 
 
-// Funzione unica per generare l'elenco cliccabile con logica condizionale
-function generateCatastoList(dataArray, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container || !Array.isArray(dataArray)) return;
+// Funzione generica per creare liste/gallerie di documenti (usata da Catasti e Altre Fonti)
+function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_onciari') {
+  const container = document.getElementById(containerId);
+  if (!container || !Array.isArray(dataArray)) return;
 
-    // Pulizia del vecchio contenuto del container
-    container.innerHTML = ''; 
+  container.innerHTML = '';
 
-    dataArray.forEach(atto => {
-        const div = document.createElement('div');
-        div.className = 'atto'; 
-        
-        const titoloDiv = document.createElement('div');
-        titoloDiv.textContent = atto.titolo;
-        titoloDiv.style.cursor = 'pointer';
+  dataArray.forEach(atto => {
+    const div = document.createElement('div');
+    div.className = 'atto';
 
-        // Verifica la presenza di 'immagini' (questi sono i file per persona)
-        const numImmagini = Array.isArray(atto.immagini) ? atto.immagini.length : 0;
-        
-        // --- CASO A: PIÙ DI UNA IMMAGINE (Galleria Espandibile) ---
-        if (numImmagini > 1) {
-            
-            const galleria = document.createElement('div');
-            galleria.className = 'galleria-attuale';
-            galleria.style.display = 'none';
-            
-            titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(espandi ${numImmagini} pagine)</span>`;
+    const titoloDiv = document.createElement('div');
+    titoloDiv.textContent = atto.titolo;
+    titoloDiv.style.cursor = 'pointer';
 
+    const numImmagini = Array.isArray(atto.immagini) ? atto.immagini.length : 0;
 
-            titoloDiv.onclick = () => {
-                galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
-                
-                if (galleria.childElementCount === 0) {
-                    atto.immagini.forEach(img => {
-                        const imgElem = document.createElement('img');
-                        // COSTRUZIONE DEL PERCORSO: BASE_FOLDER_CATASTI / atto.cartella / img
-                        const webPath = `${atto.cartella}/${img}`.replace(/\\/g, '/');
-                        imgElem.src = encodeURI(`${BASE_FOLDER_CATASTI}/${webPath}`);
+    if (numImmagini > 1) {
+      const galleria = document.createElement('div');
+      galleria.className = 'galleria-attuale';
+      galleria.style.display = 'none';
 
-                        imgElem.alt = atto.titolo || '';
-                        imgElem.style.maxWidth = '150px';
-                        imgElem.style.margin = '5px';
-                        imgElem.style.cursor = 'zoom-in';
+      titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(espandi ${numImmagini} pagine)</span>`;
 
-                        galleria.appendChild(imgElem);
-                    });
-                }
-            };
+      titoloDiv.onclick = () => {
+        galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
 
-            div.appendChild(titoloDiv);
-            div.appendChild(galleria);
-            
-        // --- CASO B: UNA SOLA IMMAGINE (Link Diretto) ---
-        } else if (numImmagini === 1) {
-            
-            titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(apri immagine)</span>`;
-            
-            // Costruisce il percorso completo per il link diretto
-            const webPath = `${atto.cartella}/${atto.immagini[0]}`.replace(/\\/g, '/');
-            const fullSrc = encodeURI(`${BASE_FOLDER_CATASTI}/${webPath}`);
-
-            titoloDiv.onclick = () => {
-                // Chiama la funzione openOverlay definita sopra per aprire subito l'immagine ingrandita
-                openOverlay(fullSrc);
-            };
-            
-            div.appendChild(titoloDiv);
-            
-        } else {
-            titoloDiv.innerHTML = `${atto.titolo} <span style="color:red;">(Nessun file trovato)</span>`;
-            div.appendChild(titoloDiv);
+        if (galleria.childElementCount === 0) {
+          atto.immagini.forEach(img => {
+            const imgElem = document.createElement('img');
+            const webPath = `${atto.cartella}/${img}`.replace(/\\/g, '/');
+            imgElem.src = encodeURI(`${baseFolder}/${webPath}`);
+            imgElem.alt = atto.titolo || '';
+            imgElem.style.maxWidth = '150px';
+            imgElem.style.margin = '5px';
+            imgElem.style.cursor = 'zoom-in';
+            imgElem.onclick = () => openOverlay(imgElem.src);
+            galleria.appendChild(imgElem);
+          });
         }
+      };
 
-        container.appendChild(div);
-    });
+      div.appendChild(titoloDiv);
+      div.appendChild(galleria);
+    } else if (numImmagini === 1) {
+      const webPath = `${atto.cartella}/${atto.immagini[0]}`.replace(/\\/g, '/');
+      const fullSrc = encodeURI(`${baseFolder}/${webPath}`);
+
+      titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(apri immagine)</span>`;
+      titoloDiv.onclick = () => openOverlay(fullSrc);
+      div.appendChild(titoloDiv);
+    } else {
+      titoloDiv.innerHTML = `${atto.titolo} <span style="color:red;">(Nessun file trovato)</span>`;
+      div.appendChild(titoloDiv);
+    }
+
+    container.appendChild(div);
+  });
 }
 
 
@@ -703,7 +683,7 @@ fetch('catasti.json')
 // LOGICA PER ALTRE FONTI STORICHE (altre_fonti.json)
 // ==========================================================
 
-const BASE_FOLDER_ALTRE_FONTI = 'altre_fonti_storiche';
+const BASE_FOLDER_ALTRE_FONTI = 'altre_fonti';
 
 fetch('altre_fonti.json')
     .then(res => { 
