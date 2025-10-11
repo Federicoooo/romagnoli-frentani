@@ -682,13 +682,21 @@ fetch('catasti.json')
 
 
 
-  // Event delegation: se clicchi su una <img> dentro "elenco" -> apri overlay
-  elenco.addEventListener('click', (ev) => {
+// Event delegation UNIVERSALE: Cliccando su qualsiasi miniatura (img) all'interno 
+// di qualsiasi sezione documenti (che usa openOverlay), apri l'overlay.
+document.addEventListener('click', (ev) => {
+    // Cerchiamo la miniatura più vicina all'elemento cliccato
     const img = ev.target.closest && ev.target.closest('img');
-    if (!img) return;
-    ev.preventDefault();
-    openOverlay(img.src);
-  });
+    
+    // Controlliamo che l'immagine sia all'interno di un contenitore che usiamo per i documenti
+    // (escludendo miniature usate per altre cose, se ce ne sono)
+    const isInsideDocumentContainer = ev.target.closest('#elencoAttiNotarili, #catastiNapoliContainer, #catastiLancianoContainer, #galleria');
+    
+    if (img && isInsideDocumentContainer) {
+        ev.preventDefault();
+        openOverlay(img.src);
+    }
+});
 
   // Chiudi cliccando sullo sfondo (ma non se clicchi l'immagine)
   overlay.addEventListener('click', (e) => {
