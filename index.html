@@ -713,7 +713,8 @@ document.addEventListener('click', (ev) => {
     
     // Controlliamo che l'immagine sia all'interno di un contenitore che usiamo per i documenti
     // (escludendo miniature usate per altre cose, se ce ne sono)
-    const isInsideDocumentContainer = ev.target.closest('#elencoAttiNotarili, #catastiNapoliContainer, #catastiLancianoContainer, #galleria');
+// Aggiungi #altreFontiContainer per includere le nuove miniature
+    const isInsideDocumentContainer = ev.target.closest('#elencoAttiNotarili, #catastiNapoliContainer, #catastiLancianoContainer, #altreFontiContainer');
     
     if (img && isInsideDocumentContainer) {
         ev.preventDefault();
