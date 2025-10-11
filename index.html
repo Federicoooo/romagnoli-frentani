@@ -362,39 +362,11 @@ nel libro<br/>
 <h3>1618 Catasto del Comune di Lanciano</h3>
 <div id="catastiLancianoContainer" class="list-container">
     </div>
-<section class="section" id="altre-fonti-storiche"></section>
-<h2>📚 Altre fonti storiche<br/>
-</h2>
-<h3>L'atto notarile del 25 marzo 1719</h3>
-<p><em>Dichiarazione di Costanzo Silvestro Romagnoli. Notaio Berardo De Luca di Lanciano</em></p>
-<ul class="document-list">
-<li> <a class="doc-link" href="fonti/antinori/383.jpg" target="_blank"> <strong>Pagina
-383</strong> - Il perduto castello di Belvedere </a> </li>
-<li> <a class="doc-link" href="fonti/antinori/384.jpg" target="_blank"> <strong>Pagina
-384</strong> - Cappellani della Chiesa di S. Andrea (1374-1393) </a> </li>
-<li> <a class="doc-link" href="fonti/antinori/387.jpg" target="_blank"> <strong>Pagina
-387</strong> - Villa di Giovanni Tommaso Mazzograsso (1528-1595) </a> </li>
-<li> <a class="doc-link" href="fonti/antinori/388.jpg" target="_blank"> <strong>Pagina
-388</strong> - Chiesa di S. Rocco e popolazione delle Ville (1595) </a>
-</li>
-<li> <a class="doc-link" href="fonti/antinori/389.jpg" target="_blank"> <strong>Pagina
-389</strong> - Villa romana dei Cesia a Santa Maria Imbaro </a> </li>
-<li> <a class="doc-link" href="fonti/antinori/390.jpg" target="_blank"> <strong>Pagina
-390</strong> - Ritrovamento urna cineraria "OSSA MEMMI⸮" presso Villa
-Romagnuolo </a> </li>
-<h3>L'atto notarile del 25 marzo 1719</h3>
-<p><em>Costanzo Silvestro Romagnoli dal notaio Berardo De Luca</em></p>
-<li> <a class="doc-link" href="fonti/carabba/Regi%20Tabulari.jpg" target="_blank"> <strong>Regi
-Tabulari 1573</strong> - Villa Mozzagrogna (da F. Carabba, p. 211) </a>
-</li>
-</ul>
-<h3>Catalogo dei morti della Citta di Ancona</h3>
-<em>I Romagnoli e i D'Ancona Anni 1554-1589 e 1590-1599</em>
-<ul class="document-list">
-<li> <a class="doc-link" href="fonti/pacichelli/1703_Pacichelli.pdf" target="_blank">
-<strong>Del Regno di Napoli</strong> - Menzione di "Bonagnoli"
-(1703, p. 9) </a> </li>
-</ul>
+<section class="section" id="altre-fonti-storiche">
+  </section>
+<h2>📚 Altre fonti storiche<br/></h2>
+<div id="altreFontiContainer" class="list-container">
+</div>
 <section class="section" id="documenti-link"> </section>
 <h2>📑 Documenti vari, link</h2>
 <p><em>Documenti vari e risorse esterne</em></p>
@@ -676,8 +648,66 @@ fetch('catasti.json')
         }
     });
 
-// Event delegation è già definita sotto
+// ==========================================================
+// LOGICA PER ALTRE FONTI STORICHE (altre_fonti.json)
+// ==========================================================
 
+const BASE_FOLDER_ALTRE_FONTI = 'altre_fonti_storiche';
+
+fetch('altre_fonti.json')
+    .then(res => { 
+        if(!res.ok) throw new Error('Impossibile caricare altre_fonti.json'); 
+        return res.json(); 
+    })
+    .then(data => {
+        const container = document.getElementById('altreFontiContainer');
+        if (!container || !Array.isArray(data)) return;
+
+        data.forEach(item => {
+            // Creo il titolo principale per l'atto
+            const h3 = document.createElement('h3');
+            h3.textContent = item.titolo;
+            container.appendChild(h3);
+
+            // Aggiungo il sottotitolo
+            if (item.sottotitolo) {
+                const p = document.createElement('p');
+                p.innerHTML = `<em>${item.sottotitolo}</em>`;
+                container.appendChild(p);
+            }
+            
+            // Dato che la struttura JSON è la stessa usata per i gruppi dei catasti,
+            // posso usare la stessa funzione generateCatastoList (rinominandola internamente per chiarezza):
+            
+            // La funzione generateCatastoList necessita di un array, e non dell'oggetto principale.
+            // Creiamo un array temporaneo per il singolo documento.
+            
+            const tempArray = [
+                {
+                    titolo: item.titolo,
+                    cartella: item.cartella,
+                    immagini: item.immagini
+                }
+            ];
+
+            // Invece di usare un container esterno, creiamo un div specifico per l'elenco/galleria
+            const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
+            const actDiv = document.createElement('div');
+            actDiv.id = actDivId;
+            actDiv.className = 'list-container';
+            container.appendChild(actDiv);
+            
+            // Chiamiamo la funzione riutilizzata
+            generateCatastoList(tempArray, actDivId, BASE_FOLDER_ALTRE_FONTI);
+        });
+    })
+    .catch(err => {
+        console.error("Errore fatale nel caricamento delle altre fonti:", err);
+        const container = document.getElementById('altreFontiContainer');
+        if(container) {
+            container.innerHTML = '<p style="color:red;">Impossibile caricare i dati delle Altre Fonti Storiche. Verificare il file altre_fonti.json.</p>';
+        }
+    });
 
 
 // Event delegation UNIVERSALE: Cliccando su qualsiasi miniatura (img) all'interno 

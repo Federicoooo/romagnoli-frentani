@@ -1,0 +1,24 @@
+[
+  {
+    "titolo": "Dichiarazione Notarile (1719)",
+    "sottotitolo": "Costanzo Silvestro Romagnoli. Notaio Berardo De Luca di Lanciano.",
+    "cartella": "1719_(Notaio_B._De_Luca)_Costanzo_Silvestro_Romagnoli_(dichiarazione)",
+    "immagini": [
+      "IMG_20250326_142004625.jpg",
+      "IMG_20250326_142009896.jpg",
+      "IMG_20250326_142345022.jpg",
+      "IMG_20250326_142357564.jpg"
+    ]
+  },
+  {
+    "titolo": "Catalogo dei morti di Ancona",
+    "sottotitolo": "Anni 1554-1599",
+    "cartella": "1554-1599_Catalogo_dei_morti_di_Ancona",
+    "immagini": [
+      "Catalogo_dei_morti_Ancona_1554-1589.pdf",
+      "Catalogo_dei_morti_Ancona_1590-1599.pdf"
+      // Se il file originale è un Excel con due fogli, la soluzione migliore
+      // è dividerlo in due file PDF (o Excel se preferisci) come mostrato qui.
+    ]
+  }
+]
