@@ -1,0 +1,153 @@
+﻿[
+  {
+    "titolo": "Catasto di Lanciano e Ville (1618)",
+    "gruppi": [
+      {
+        "titolo": "Borgo: Andrea Romagnolo",
+        "cartella": "1618_Catasto_Lanciano_e_Ville/Borgo/Andrea_Romagnolo",
+        "immagini": [
+          "Andrea_Romagnolo.jpg"
+        ]
+      },
+      {
+        "titolo": "Borgo: Francesca Romagnola",
+        "cartella": "1618_Catasto_Lanciano_e_Ville/Borgo/Francesca_Romagnola",
+        "immagini": [
+          "Francesca_Romagnola.jpg"
+        ]
+      },
+      {
+        "titolo": "Borgo: Giovanni Battista di Pietro Romagnolo",
+        "cartella": "1618_Catasto_Lanciano_e_Ville/Borgo/Giovanni_Battista_di_Pietro_Romagnolo",
+        "immagini": [
+          "Giovanni_Battista_di_Pietro_Romagnolo.jpg"
+        ]
+      },
+      {
+        "titolo": "Borgo: Giuseppe di Giovanni Battista Romagnolo",
+        "cartella": "1618_Catasto_Lanciano_e_Ville/Borgo/Giuseppe_di_Giovanni_Battista_Romagnolo",
+        "immagini": [
+          "Giuseppe_di_Giovanni_Battista_Romagnolo.jpg"
+        ]
+      },
+      {
+        "titolo": "Borgo: Simone Romagnolo",
+        "cartella": "1618_Catasto_Lanciano_e_Ville/Borgo/Simone_Romagnolo",
+        "immagini": [
+          "Simone_Romagnolo.jpg"
+        ]
+      },
+      {
+        "titolo": "Borgo: Tomasso Romagnolo",
+        "cartella": "1618_Catasto_Lanciano_e_Ville/Borgo/Tomasso_Romagnolo",
+        "immagini": [
+          "Tomasso_Romagnolo.jpg"
+        ]
+      },
+      {
+        "titolo": "Lanciano Vecchia: Antonio Romagnolo",
+        "cartella": "1618_Catasto_Lanciano_e_Ville/Lanciano_vecchia/Antonio_Romagnolo",
+        "immagini": [
+          "Antonio_Romagnolo.jpg"
+        ]
+      },
+      {
+        "titolo": "Lanciano Vecchia: Pasquino Romagnolo",
+        "cartella": "1618_Catasto_Lanciano_e_Ville/Lanciano_vecchia/Pasquino_Romagnolo",
+        "immagini": [
+          "Pasquino_Romagnolo.jpg"
+        ]
+      },
+      {
+        "titolo": "Villa Cotellessa: Francesco Romagnolo",
+        "cartella": "1618_Catasto_Lanciano_e_Ville/Villa_Cotellessa/Francesco_Romagnolo",
+        "immagini": [
+          "Francesco_Romagnolo.jpg"
+        ]
+      },
+      {
+        "titolo": "Villa Pietra Costantina: Matteo Romagnolo",
+        "cartella": "1618_Catasto_Lanciano_e_Ville/Villa_Pietra_Costantina/Matteo_Romagnolo",
+        "immagini": [
+          "Matteo_Romagnolo.jpg"
+        ]
+      }
+    ]
+  },
+  {
+    "titolo": "Catasto del Regno di Napoli (1743-1747)",
+    "gruppi": [
+      {
+        "titolo": "Lanciano: Domenico Romagnoli",
+        "cartella": "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano/Lanciano/Domenico_Romagnoli",
+        "immagini": [
+          "Domenico_Romagnoli.jpg"
+        ]
+      },
+      {
+        "titolo": "Lanciano: Gennaro Romagnoli",
+        "cartella": "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano/Lanciano/Gennaro_Romagnoli",
+        "immagini": [
+          "Gennaro_Romagnoli.jpg"
+        ]
+      },
+      {
+        "titolo": "Mozzagrogna: Carlo Romagnoli",
+        "cartella": "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano/Mozzagrogna/Carlo_Romagnoli",
+        "immagini": [
+          "Catasto_Onciario_3399_pag.009.jpg"
+        ]
+      },
+      {
+        "titolo": "Mozzagrogna: Fabio di Tommaso Romagnoli",
+        "cartella": "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano/Mozzagrogna/Fabio_di_Tommaso_Romagnoli",
+        "immagini": [
+          "Catasto_Onciario_3399_pag.015.jpg",
+          "Catasto_Onciario_3399_pag.016.jpg"
+        ]
+      },
+      {
+        "titolo": "Mozzagrogna: Giuseppe di Silvestro Romagnoli",
+        "cartella": "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano/Mozzagrogna/Giuseppe_di_Silvestro_Romagnoli",
+        "immagini": [
+          "Catasto_Onciario_3399_pag.046.jpg",
+          "Catasto_Onciario_3399_pag.047.jpg",
+          "Catasto_Onciario_3399_pag.048.jpg",
+          "Catasto_Onciario_3399_pag.049.jpg"
+        ]
+      },
+      {
+        "titolo": "Mozzagrogna: Paolo Romagnoli",
+        "cartella": "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano/Mozzagrogna/Paolo_Romagnoli",
+        "immagini": [
+          "Catasto_Onciario_3399_pag.034.jpg",
+          "Catasto_Onciario_3399_pag.035-1.jpg"
+        ]
+      },
+      {
+        "titolo": "Mozzagrogna: Pasquale Romagnoli",
+        "cartella": "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano/Mozzagrogna/Pasquale_Romagnoli",
+        "immagini": [
+          "Catasto_Onciario_3399_pag.035.jpg",
+          "Catasto_Onciario_3399_pag.036.jpg"
+        ]
+      },
+      {
+        "titolo": "Mozzagrogna: Sabatino Romagnoli",
+        "cartella": "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano/Mozzagrogna/Sabatino_Romagnoli",
+        "immagini": [
+          "Catasto_Onciario, 3399_pag.042.jpg",
+          "Catasto_Onciario_3399_pag.041-2.jpg"
+        ]
+      },
+      {
+        "titolo": "Mozzagrogna: Simone di Leonardo Romagnoli",
+        "cartella": "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano/Mozzagrogna/Simone_di_Leonardo_Romagnoli",
+        "immagini": [
+          "Catasto_Onciario_3399_pag.040.jpg",
+          "Catasto_Onciario_3399_pag.041-1.jpg"
+        ]
+      }
+    ]
+  }
+]
