@@ -527,154 +527,262 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
 
+
 // ==========================================================
-// FUNZIONE GENERICA per creare liste/gallerie di documenti
+// LOGICA UNIFICATA PER CATASTI ONCIARI (catasti.json)
 // ==========================================================
-function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_onciari') {
-  const container = document.getElementById(containerId);
-  if (!container || !Array.isArray(dataArray)) return;
 
-  container.innerHTML = '';
+// Nota: La funzione openOverlay deve essere definita prima o in questo blocco, ma è già definita sopra.
 
-  dataArray.forEach(atto => {
-    const div = document.createElement('div');
-    div.className = 'atto';
+const BASE_FOLDER_CATASTI = 'catasti_onciari'; 
 
-    const titoloDiv = document.createElement('div');
-    titoloDiv.textContent = atto.titolo;
-    titoloDiv.style.cursor = 'pointer';
+// Funzione unica per generare l'elenco cliccabile con logica condizionale
+function generateCatastoList(dataArray, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container || !Array.isArray(dataArray)) return;
 
-    const numImmagini = Array.isArray(atto.immagini) ? atto.immagini.length : 0;
+    // Pulizia del vecchio contenuto del container
+    container.innerHTML = ''; 
 
-    if (numImmagini > 1) {
-      const galleria = document.createElement('div');
-      galleria.className = 'galleria-attuale';
-      galleria.style.display = 'none';
+    dataArray.forEach(atto => {
+        const div = document.createElement('div');
+        div.className = 'atto'; 
+        
+        const titoloDiv = document.createElement('div');
+        titoloDiv.textContent = atto.titolo;
+        titoloDiv.style.cursor = 'pointer';
 
-      titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(espandi ${numImmagini} pagine)</span>`;
+        // Verifica la presenza di 'immagini' (questi sono i file per persona)
+        const numImmagini = Array.isArray(atto.immagini) ? atto.immagini.length : 0;
+        
+        // --- CASO A: PIÙ DI UNA IMMAGINE (Galleria Espandibile) ---
+        if (numImmagini > 1) {
+            
+            const galleria = document.createElement('div');
+            galleria.className = 'galleria-attuale';
+            galleria.style.display = 'none';
+            
+            titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(espandi ${numImmagini} pagine)</span>`;
 
-      titoloDiv.onclick = () => {
-        galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
 
-        if (galleria.childElementCount === 0) {
-          atto.immagini.forEach(img => {
-            const imgElem = document.createElement('img');
-            const webPath = `${atto.cartella}/${img}`.replace(/\\/g, '/');
-            imgElem.src = encodeURI(`${baseFolder}/${webPath}`);
-            imgElem.alt = atto.titolo || '';
-            imgElem.style.maxWidth = '150px';
-            imgElem.style.margin = '5px';
-            imgElem.style.cursor = 'zoom-in';
-            imgElem.onclick = () => openOverlay(imgElem.src);
-            galleria.appendChild(imgElem);
-          });
+            titoloDiv.onclick = () => {
+                galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
+                
+                if (galleria.childElementCount === 0) {
+                    atto.immagini.forEach(img => {
+                        const imgElem = document.createElement('img');
+                        // COSTRUZIONE DEL PERCORSO: BASE_FOLDER_CATASTI / atto.cartella / img
+                        const webPath = `${atto.cartella}/${img}`.replace(/\\/g, '/');
+                        imgElem.src = encodeURI(`${BASE_FOLDER_CATASTI}/${webPath}`);
+
+                        imgElem.alt = atto.titolo || '';
+                        imgElem.style.maxWidth = '150px';
+                        imgElem.style.margin = '5px';
+                        imgElem.style.cursor = 'zoom-in';
+
+                        galleria.appendChild(imgElem);
+                    });
+                }
+            };
+
+            div.appendChild(titoloDiv);
+            div.appendChild(galleria);
+            
+        // --- CASO B: UNA SOLA IMMAGINE (Link Diretto) ---
+        } else if (numImmagini === 1) {
+            
+            titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(apri immagine)</span>`;
+            
+            // Costruisce il percorso completo per il link diretto
+            const webPath = `${atto.cartella}/${atto.immagini[0]}`.replace(/\\/g, '/');
+            const fullSrc = encodeURI(`${BASE_FOLDER_CATASTI}/${webPath}`);
+
+            titoloDiv.onclick = () => {
+                // Chiama la funzione openOverlay definita sopra per aprire subito l'immagine ingrandita
+                openOverlay(fullSrc);
+            };
+            
+            div.appendChild(titoloDiv);
+            
+        } else {
+            titoloDiv.innerHTML = `${atto.titolo} <span style="color:red;">(Nessun file trovato)</span>`;
+            div.appendChild(titoloDiv);
         }
-      };
 
-      div.appendChild(titoloDiv);
-      div.appendChild(galleria);
-    } else if (numImmagini === 1) {
-      const webPath = `${atto.cartella}/${atto.immagini[0]}`.replace(/\\/g, '/');
-      const fullSrc = encodeURI(`${baseFolder}/${webPath}`);
-
-      titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(apri immagine)</span>`;
-      titoloDiv.onclick = () => openOverlay(fullSrc);
-      div.appendChild(titoloDiv);
-    } else {
-      titoloDiv.innerHTML = `${atto.titolo} <span style="color:red;">(Nessun file trovato)</span>`;
-      div.appendChild(titoloDiv);
-    }
-
-    container.appendChild(div);
-  });
+        container.appendChild(div);
+    });
 }
 
 
-// ==========================================================
-// LOGICA PER CATASTI ONCIARI (catasti.json)
-// ==========================================================
 fetch('catasti.json')
-  .then(res => { 
-    if(!res.ok) throw new Error('Impossibile caricare catasti.json'); 
-    return res.json(); 
-  })
-  .then(data => {
-    const catastoLanciano = data[0];
-    const catastoNapoli = data[1];
+    .then(res => { 
+        if(!res.ok) throw new Error('Impossibile caricare catasti.json'); 
+        return res.json(); 
+    })
+    .then(data => {
+        // Il tuo JSON a gruppi deve avere: [0] = Lanciano (1618), [1] = Napoli (1743/47)
+        const catastoLanciano = data[0]; 
+        const catastoNapoli = data[1];   
 
-    if (catastoNapoli && catastoNapoli.gruppi) {
-      generateCatastoList(catastoNapoli.gruppi, 'catastiNapoliContainer');
-    }
-    if (catastoLanciano && catastoLanciano.gruppi) {
-      generateCatastoList(catastoLanciano.gruppi, 'catastiLancianoContainer');
-    }
-  })
-  .catch(err => {
-    console.error("Errore nel caricamento dei catasti:", err);
-    document.getElementById('catastiNapoliContainer').innerHTML = '<p style="color:red;">Errore nel caricamento dei Catasti Onciari.</p>';
-  });
+        // 1. Catasto di Napoli (1743/47): usa catastoNapoli.gruppi
+        if (catastoNapoli && catastoNapoli.gruppi) {
+            generateCatastoList(catastoNapoli.gruppi, 'catastiNapoliContainer');
+        } else if (catastoNapoli) {
+             console.error("L'oggetto Catasto di Napoli non è strutturato con la chiave 'gruppi'.");
+        }
 
 
-// ==========================================================
-// LOGICA PER ALTRE FONTI STORICHE (altre_fonti.json)
-// ==========================================================
-const BASE_FOLDER_ALTRE_FONTI = 'altre_fonti'; // <--- verifica che il nome corrisponda alla tua cartella!
+        // 2. Catasto di Lanciano (1618): usa catastoLanciano.gruppi
+        if (catastoLanciano && catastoLanciano.gruppi) {
+             generateCatastoList(catastoLanciano.gruppi, 'catastiLancianoContainer');
+        } else if (catastoLanciano) {
+            console.error("L'oggetto Catasto di Lanciano (1618) non è strutturato con la chiave 'gruppi'.");
+        }
 
-fetch('altre_fonti.json')
-  .then(res => { 
-    if(!res.ok) throw new Error('Impossibile caricare altre_fonti.json'); 
-    return res.json(); 
-  })
-  .then(data => {
-    const container = document.getElementById('altreFontiContainer');
-    if (!container || !Array.isArray(data)) return;
-
-    data.forEach(item => {
-      const h3 = document.createElement('h3');
-      h3.textContent = item.titolo;
-      container.appendChild(h3);
-
-      if (item.sottotitolo) {
-        const p = document.createElement('p');
-        p.innerHTML = `<em>${item.sottotitolo}</em>`;
-        container.appendChild(p);
-      }
-
-      const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
-      const actDiv = document.createElement('div');
-      actDiv.id = actDivId;
-      actDiv.className = 'list-container';
-      container.appendChild(actDiv);
-
-      generateCatastoList([{
-        titolo: item.titolo,
-        cartella: item.cartella,
-        immagini: item.immagini
-      }], actDivId, BASE_FOLDER_ALTRE_FONTI);
+    })
+    .catch(err => {
+        console.error("Errore fatale nel caricamento dei catasti:", err);
+        const containerNapoli = document.getElementById('catastiNapoliContainer');
+        if(containerNapoli) {
+            containerNapoli.innerHTML = '<p style="color:red;">Impossibile caricare i dati dei Catasti Onciari. Verificare il file catasti.json.</p>';
+        }
     });
-  })
-  .catch(err => {
-    console.error("Errore nel caricamento delle altre fonti:", err);
-    const container = document.getElementById('altreFontiContainer');
-    if(container) {
-      container.innerHTML = '<p style="color:red;">Impossibile caricare le Altre Fonti Storiche.</p>';
-    }
-  });
+
+// Event delegation è già definita sotto
 
 
-// ==========================================================
-// EVENT DELEGATION - gestione click miniature
-// ==========================================================
+
+// Event delegation UNIVERSALE: Cliccando su qualsiasi miniatura (img) all'interno 
+// di qualsiasi sezione documenti (che usa openOverlay), apri l'overlay.
 document.addEventListener('click', (ev) => {
-  const img = ev.target.closest && ev.target.closest('img');
-  const validContainers = '#elencoAttiNotarili, #catastiNapoliContainer, #catastiLancianoContainer, #galleria, #altreFontiContainer';
-  const isInside = img && ev.target.closest(validContainers);
-  if (img && isInside) {
-    ev.preventDefault();
-    openOverlay(img.src);
-  }
+    // Cerchiamo la miniatura più vicina all'elemento cliccato
+    const img = ev.target.closest && ev.target.closest('img');
+    
+    // Controlliamo che l'immagine sia all'interno di un contenitore che usiamo per i documenti
+    // (escludendo miniature usate per altre cose, se ce ne sono)
+    const isInsideDocumentContainer = ev.target.closest('#elencoAttiNotarili, #catastiNapoliContainer, #catastiLancianoContainer, #galleria');
+    
+    if (img && isInsideDocumentContainer) {
+        ev.preventDefault();
+        openOverlay(img.src);
+    }
 });
 
+  // Chiudi cliccando sullo sfondo (ma non se clicchi l'immagine)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeOverlay();
+  });
+
+  // ESC per chiudere
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeOverlay();
+  });
+
+  // Zoom con la rotellina: zoom verso il punto del cursore
+  overlay.addEventListener('wheel', (e) => {
+    if (!overlay.classList.contains('active')) return;
+    e.preventDefault();
+    const rect = overlayImg.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const prevScale = scale;
+    const zoomFactor = (e.deltaY < 0) ? 1.12 : 0.88;
+    scale = Math.max(minScale, Math.min(maxScale, scale * zoomFactor));
+
+    // aggiusta pos per zoom verso il punto del cursore
+    posX -= (mx - rect.width / 2) * (scale / prevScale - 1);
+    posY -= (my - rect.height / 2) * (scale / prevScale - 1);
+
+    updateTransform();
+  }, { passive: false });
+
+// Pan (trascinamento) con inerzia e limiti ai bordi
+let velocityX = 0, velocityY = 0;
+let lastX = 0, lastY = 0;
+let lastTime = 0;
+let inertiaFrame;
+
+overlayImg.addEventListener('pointerdown', (e) => {
+  isPointerDown = true;
+  cancelAnimationFrame(inertiaFrame);
+  overlayImg.setPointerCapture(e.pointerId);
+  pointerStartX = e.clientX;
+  pointerStartY = e.clientY;
+  startPosX = posX;
+  startPosY = posY;
+  lastX = e.clientX;
+  lastY = e.clientY;
+  lastTime = performance.now();
+  overlay.style.cursor = 'grabbing';
+});
+
+overlayImg.addEventListener('pointermove', (e) => {
+  if (!isPointerDown) return;
+
+  const now = performance.now();
+  const dt = now - lastTime;
+  lastTime = now;
+
+  const dx = e.clientX - lastX;
+  const dy = e.clientY - lastY;
+  lastX = e.clientX;
+  lastY = e.clientY;
+
+  // velocità pixel/ms (serve per inerzia)
+  velocityX = dx / dt;
+  velocityY = dy / dt;
+
+  const speedFactor = 3.5 * Math.max(1, scale);
+  posX = startPosX + (e.clientX - pointerStartX) * speedFactor;
+  posY = startPosY + (e.clientY - pointerStartY) * speedFactor;
+
+  updateTransform();
+});
+
+overlayImg.addEventListener('pointerup', (e) => {
+  isPointerDown = false;
+  try { overlayImg.releasePointerCapture(e.pointerId); } catch (err) {}
+  overlay.style.cursor = 'grab';
+
+  // applica inerzia dopo il rilascio
+  const friction = 0.94; // minore = più lunga l’inerzia
+  const step = () => {
+    posX += velocityX * 30; // moltiplica per la velocità residua
+    posY += velocityY * 30;
+    velocityX *= friction;
+    velocityY *= friction;
+
+    // ferma quando la velocità è minima
+    if (Math.abs(velocityX) < 0.01 && Math.abs(velocityY) < 0.01) return;
+
+    limitToBounds();
+    updateTransform();
+    inertiaFrame = requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+});
+
+overlayImg.addEventListener('pointercancel', () => {
+  isPointerDown = false;
+  overlay.style.cursor = 'grab';
+});
+
+// Impedisce che la foto "scappi via" oltre lo schermo
+function limitToBounds() {
+  const rect = overlayImg.getBoundingClientRect();
+  const overW = Math.max(0, (rect.width - window.innerWidth) / 2);
+  const overH = Math.max(0, (rect.height - window.innerHeight) / 2);
+  posX = Math.min(overW, Math.max(-overW, posX));
+  posY = Math.min(overH, Math.max(-overH, posY));
+}
+
+  // Doppio click: toggle zoom / reset
+  overlayImg.addEventListener('dblclick', () => {
+    if (scale > 1) { scale = 1; posX = 0; posY = 0; }
+    else { scale = 2; } // apri al 200%
+    updateTransform();
+  });
+});
 </script>
 
 </body>
