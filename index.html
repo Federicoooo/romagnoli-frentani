@@ -569,79 +569,42 @@ function generateCatastoList(dataArray, containerId, baseFolder) { // <--- AGGIU
                 galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
                 
                 if (galleria.childElementCount === 0) {
-                    atto.immagini.forEach(file => { // Rinominato "img" in "file" per chiarezza
-                        const webPath = `${atto.cartella}/${file}`.replace(/\\/g, '/');
-                        const fullSrc = encodeURI(`${baseFolder}/${webPath}`);
-                        
-                        // --- LOGICA DI CONTROLLO DEL TIPO DI FILE ---
-                        // Verifica se l'estensione è jpg, jpeg, png, gif o webp
-                        const isImage = file.toLowerCase().match(/\.(jpe?g|png|gif|webp)$/);
+                    atto.immagini.forEach(img => {
+                        const imgElem = document.createElement('img');
+                        /// COSTRUZIONE DEL PERCORSO: baseFolder / atto.cartella / img
+                        const webPath = `${atto.cartella}/${img}`.replace(/\\/g, '/');
+                        imgElem.src = encodeURI(`${baseFolder}/${webPath}`); // <--- USA baseFolder
 
-                        if (isImage) {
-                            // Se è un'immagine, crea una miniatura ingrandibile
-                            const imgElem = document.createElement('img');
-                            imgElem.src = fullSrc;
-                            imgElem.alt = file || '';
-                            imgElem.style.maxWidth = '150px';
-                            imgElem.style.margin = '5px';
-                            imgElem.style.cursor = 'zoom-in';
-                            galleria.appendChild(imgElem);
-                        } else {
-                            // Se NON è un'immagine (es. PDF), crea un link diretto
-                            const linkElem = document.createElement('a');
-                            linkElem.href = fullSrc;
-                            linkElem.target = '_blank'; // Apre in una nuova scheda
-                            linkElem.style.display = 'block';
-                            linkElem.style.margin = '5px 0';
-                            linkElem.style.padding = '5px';
-                            linkElem.style.border = '1px solid #ccc';
-                            linkElem.style.backgroundColor = '#f5f5f5';
-                            linkElem.style.textDecoration = 'none';
+                        imgElem.alt = atto.titolo || '';
+                        imgElem.style.maxWidth = '150px';
+                        imgElem.style.margin = '5px';
+                        imgElem.style.cursor = 'zoom-in';
 
-                            // Estrae l'estensione per visualizzarla (es. PDF)
-                            const fileExt = file.substring(file.lastIndexOf('.') + 1).toUpperCase();
-                            linkElem.innerHTML = `📄 <strong style="color:#cc0000;">[${fileExt}]</strong> ${file}`;
-
-                            galleria.appendChild(linkElem);
-                        }
-                    });
-                }
+                        galleria.appendChild(imgElem);
+                    });
                 }
             };
 
             div.appendChild(titoloDiv);
             div.appendChild(galleria);
             
-        // --- CASO B: UN SOLO FILE (Overlay o Link Diretto) ---
+        // --- CASO B: UNA SOLA IMMAGINE (Link Diretto) ---
         } else if (numImmagini === 1) {
-            const file = atto.immagini[0];
-            const webPath = `${atto.cartella}/${file}`.replace(/\\/g, '/');
-            const fullSrc = encodeURI(`${baseFolder}/${webPath}`);
             
-            // Controllo se il file è un'immagine
-            const isImage = file.toLowerCase().match(/\.(jpe?g|png|gif|webp)$/);
+            titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(apri immagine)</span>`;
             
-            if (isImage) {
-                // Se è un'immagine, usa l'overlay
-                titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(apri immagine)</span>`;
-                titoloDiv.onclick = () => {
-                    openOverlay(fullSrc);
-                };
-            } else {
-                // Se è un documento (PDF, Excel, ecc.), apri in una nuova scheda
-                const fileExt = file.substring(file.lastIndexOf('.') + 1).toUpperCase();
-                titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #cc0000;">(apri documento - ${fileExt})</span>`;
-                
-                titoloDiv.onclick = (e) => {
-                    e.preventDefault(); 
-                    window.open(fullSrc, '_blank'); // Apre il documento in una nuova scheda
-                };
-            }
+            // Costruisce il percorso completo per il link diretto
+            const webPath = `${atto.cartella}/${atto.immagini[0]}`.replace(/\\/g, '/');
+            const fullSrc = encodeURI(`${baseFolder}/${webPath}`); // <<< CORRETTO: ora usa baseFolder
+
+            titoloDiv.onclick = () => {
+                // Chiama la funzione openOverlay definita sopra per aprire subito l'immagine ingrandita
+                openOverlay(fullSrc);
+            };
             
             div.appendChild(titoloDiv);
             
         } else {
-            // Caso: Nessun file trovato
             titoloDiv.innerHTML = `${atto.titolo} <span style="color:red;">(Nessun file trovato)</span>`;
             div.appendChild(titoloDiv);
         }
@@ -750,8 +713,7 @@ document.addEventListener('click', (ev) => {
     
     // Controlliamo che l'immagine sia all'interno di un contenitore che usiamo per i documenti
     // (escludendo miniature usate per altre cose, se ce ne sono)
-// Aggiungi #altreFontiContainer per includere le nuove miniature
-    const isInsideDocumentContainer = ev.target.closest('#elencoAttiNotarili, #catastiNapoliContainer, #catastiLancianoContainer, #altreFontiContainer');
+    const isInsideDocumentContainer = ev.target.closest('#elencoAttiNotarili, #catastiNapoliContainer, #catastiLancianoContainer, #galleria');
     
     if (img && isInsideDocumentContainer) {
         ev.preventDefault();
