@@ -648,8 +648,61 @@ fetch('catasti.json')
         }
     });
 
-// Event delegation è già definita sotto
+// ==========================================================
+// LOGICA PER ALTRE FONTI STORICHE (altre_fonti.json)
+// ==========================================================
 
+const BASE_FOLDER_ALTRE_FONTI = 'altre_fonti_storiche';
+
+fetch('altre_fonti.json')
+    .then(res => { 
+        if(!res.ok) throw new Error('Impossibile caricare altre_fonti.json'); 
+        return res.json(); 
+    })
+    .then(data => {
+        const container = document.getElementById('altreFontiContainer');
+        if (!container || !Array.isArray(data)) return;
+
+        data.forEach(item => {
+            // Crea il titolo principale per l'atto
+            const h3 = document.createElement('h3');
+            h3.textContent = item.titolo;
+            container.appendChild(h3);
+
+            // Aggiunge il sottotitolo
+            if (item.sottotitolo) {
+                const p = document.createElement('p');
+                p.innerHTML = `<em>${item.sottotitolo}</em>`;
+                container.appendChild(p);
+            }
+            
+            // Creiamo un array temporaneo per il singolo documento.
+            const tempArray = [
+                {
+                    titolo: item.titolo,
+                    cartella: item.cartella,
+                    immagini: item.immagini
+                }
+            ];
+
+            // Invece di usare un container esterno, creiamo un div specifico per l'elenco/galleria
+            const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
+            const actDiv = document.createElement('div');
+            actDiv.id = actDivId;
+            actDiv.className = 'list-container';
+            container.appendChild(actDiv);
+            
+            // Chiamiamo la funzione riutilizzata
+            generateCatastoList(tempArray, actDivId, BASE_FOLDER_ALTRE_FONTI);
+        });
+    })
+    .catch(err => {
+        console.error("Errore fatale nel caricamento delle altre fonti:", err);
+        const container = document.getElementById('altreFontiContainer');
+        if(container) {
+            container.innerHTML = '<p style="color:red;">Impossibile caricare i dati delle Altre Fonti Storiche. Verificare il file altre_fonti.json.</p>';
+        }
+    });
 
 
 // Event delegation UNIVERSALE: Cliccando su qualsiasi miniatura (img) all'interno 
