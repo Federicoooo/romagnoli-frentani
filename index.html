@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const BASE_FOLDER_CATASTI = 'catasti_onciari'; 
 
 // Funzione unica per generare l'elenco cliccabile con logica condizionale
-function generateCatastoList(dataArray, containerId, baseFolder) { // <--- AGGIUNTO baseFolder
+function generateCatastoList(dataArray, containerId) {
     const container = document.getElementById(containerId);
     if (!container || !Array.isArray(dataArray)) return;
 
@@ -571,9 +571,9 @@ function generateCatastoList(dataArray, containerId, baseFolder) { // <--- AGGIU
                 if (galleria.childElementCount === 0) {
                     atto.immagini.forEach(img => {
                         const imgElem = document.createElement('img');
-                        // COSTRUZIONE DEL PERCORSO: baseFolder / atto.cartella / img
-                        const webPath = `${atto.cartella}/${img}`.replace(/\\/g, '/');
-                        imgElem.src = encodeURI(`${baseFolder}/${webPath}`); // <--- USA baseFolder
+                        // COSTRUZIONE DEL PERCORSO: BASE_FOLDER_CATASTI / atto.cartella / img
+                        const webPath = `${atto.cartella}/${img}`.replace(/\\/g, '/');
+                        imgElem.src = encodeURI(`${BASE_FOLDER_CATASTI}/${webPath}`);
 
                         imgElem.alt = atto.titolo || '';
                         imgElem.style.maxWidth = '150px';
