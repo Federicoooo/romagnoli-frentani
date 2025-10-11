@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const BASE_FOLDER_CATASTI = 'catasti_onciari'; 
 
 // Funzione unica per generare l'elenco cliccabile con logica condizionale
-function generateCatastoList(dataArray, containerId) {
+function generateCatastoList(dataArray, containerId, baseFolder) { // <--- AGGIUNTO baseFolder
     const container = document.getElementById(containerId);
     if (!container || !Array.isArray(dataArray)) return;
 
@@ -571,9 +571,9 @@ function generateCatastoList(dataArray, containerId) {
                 if (galleria.childElementCount === 0) {
                     atto.immagini.forEach(img => {
                         const imgElem = document.createElement('img');
-                        // COSTRUZIONE DEL PERCORSO: BASE_FOLDER_CATASTI / atto.cartella / img
-                        const webPath = `${atto.cartella}/${img}`.replace(/\\/g, '/');
-                        imgElem.src = encodeURI(`${BASE_FOLDER_CATASTI}/${webPath}`);
+                        /// COSTRUZIONE DEL PERCORSO: baseFolder / atto.cartella / img
+                        const webPath = `${atto.cartella}/${img}`.replace(/\\/g, '/');
+                        imgElem.src = encodeURI(`${baseFolder}/${webPath}`); // <--- USA baseFolder
 
                         imgElem.alt = atto.titolo || '';
                         imgElem.style.maxWidth = '150px';
@@ -594,8 +594,8 @@ function generateCatastoList(dataArray, containerId) {
             titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color: #777;">(apri immagine)</span>`;
             
             // Costruisce il percorso completo per il link diretto
-            const webPath = `${atto.cartella}/${atto.immagini[0]}`.replace(/\\/g, '/');
-            const fullSrc = encodeURI(`${BASE_FOLDER_CATASTI}/${webPath}`);
+            const webPath = `${atto.cartella}/${atto.immagini[0]}`.replace(/\\/g, '/');
+            const fullSrc = encodeURI(`${baseFolder}/${webPath}`); // <<< CORRETTO: ora usa baseFolder
 
             titoloDiv.onclick = () => {
                 // Chiama la funzione openOverlay definita sopra per aprire subito l'immagine ingrandita
