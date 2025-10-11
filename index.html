@@ -526,65 +526,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // facoltativo: mostra un messaggio di errore in pagina
     });
 
-// Carica altre_fonti.json
-fetch('altre_fonti.json')
-  .then(res => { if(!res.ok) throw new Error('Impossibile caricare altre_fonti.json'); return res.json(); })
-  .then(data => {
-    const container = document.getElementById('altreFontiContainer');
-    data.forEach(fonte => {
-      const div = document.createElement('div');
-      div.className = 'fonte';
-
-      const titolo = document.createElement('h3');
-      titolo.textContent = fonte.titolo;
-      div.appendChild(titolo);
-
-      if (fonte.sottotitolo) {
-        const sub = document.createElement('p');
-        sub.textContent = fonte.sottotitolo;
-        div.appendChild(sub);
-      }
-
-      const gallery = document.createElement('div');
-      gallery.className = 'galleria-attuale';
-      div.appendChild(gallery);
-
-      fonte.immagini.forEach(file => {
-        const encodedPath = encodeURI(`altre_fonti/${fonte.cartella}/${file}`);
-        if (file.toLowerCase().endsWith('.pdf')) {
-          const link = document.createElement('a');
-          link.href = encodedPath;
-          link.textContent = '📄 ' + file;
-          link.target = '_blank';
-          link.style.display = 'block';
-          gallery.appendChild(link);
-        } else {
-          const img = document.createElement('img');
-          img.src = encodedPath;
-          img.alt = fonte.titolo;
-          img.style.maxWidth = '150px';
-          img.style.margin = '5px';
-          img.style.cursor = 'zoom-in';
-          img.onclick = () => openOverlay(encodedPath);
-          gallery.appendChild(img);
-        }
-      });
-
-      container.appendChild(div);
-    });
-  })
-  .catch(err => console.error(err));
-
 
 // ==========================================================
-// LOGICA UNIFICATA PER CATASTI ONCIARI (catasti.json)
+// FUNZIONE GENERICA per creare liste/gallerie di documenti
 // ==========================================================
-
-// Nota: La funzione openOverlay deve essere definita prima o in questo blocco, ma è già definita sopra.
-
-const BASE_FOLDER_CATASTI = 'catasti_onciari'; 
-
-// Funzione generica per creare liste/gallerie di documenti (usata da Catasti e Altre Fonti)
 function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_onciari') {
   const container = document.getElementById(containerId);
   if (!container || !Array.isArray(dataArray)) return;
@@ -645,228 +590,91 @@ function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_oncia
 }
 
 
+// ==========================================================
+// LOGICA PER CATASTI ONCIARI (catasti.json)
+// ==========================================================
 fetch('catasti.json')
-    .then(res => { 
-        if(!res.ok) throw new Error('Impossibile caricare catasti.json'); 
-        return res.json(); 
-    })
-    .then(data => {
-        // Il tuo JSON a gruppi deve avere: [0] = Lanciano (1618), [1] = Napoli (1743/47)
-        const catastoLanciano = data[0]; 
-        const catastoNapoli = data[1];   
+  .then(res => { 
+    if(!res.ok) throw new Error('Impossibile caricare catasti.json'); 
+    return res.json(); 
+  })
+  .then(data => {
+    const catastoLanciano = data[0];
+    const catastoNapoli = data[1];
 
-        // 1. Catasto di Napoli (1743/47): usa catastoNapoli.gruppi
-        if (catastoNapoli && catastoNapoli.gruppi) {
-            generateCatastoList(catastoNapoli.gruppi, 'catastiNapoliContainer');
-        } else if (catastoNapoli) {
-             console.error("L'oggetto Catasto di Napoli non è strutturato con la chiave 'gruppi'.");
-        }
+    if (catastoNapoli && catastoNapoli.gruppi) {
+      generateCatastoList(catastoNapoli.gruppi, 'catastiNapoliContainer');
+    }
+    if (catastoLanciano && catastoLanciano.gruppi) {
+      generateCatastoList(catastoLanciano.gruppi, 'catastiLancianoContainer');
+    }
+  })
+  .catch(err => {
+    console.error("Errore nel caricamento dei catasti:", err);
+    document.getElementById('catastiNapoliContainer').innerHTML = '<p style="color:red;">Errore nel caricamento dei Catasti Onciari.</p>';
+  });
 
-
-        // 2. Catasto di Lanciano (1618): usa catastoLanciano.gruppi
-        if (catastoLanciano && catastoLanciano.gruppi) {
-             generateCatastoList(catastoLanciano.gruppi, 'catastiLancianoContainer');
-        } else if (catastoLanciano) {
-            console.error("L'oggetto Catasto di Lanciano (1618) non è strutturato con la chiave 'gruppi'.");
-        }
-
-    })
-    .catch(err => {
-        console.error("Errore fatale nel caricamento dei catasti:", err);
-        const containerNapoli = document.getElementById('catastiNapoliContainer');
-        if(containerNapoli) {
-            containerNapoli.innerHTML = '<p style="color:red;">Impossibile caricare i dati dei Catasti Onciari. Verificare il file catasti.json.</p>';
-        }
-    });
 
 // ==========================================================
 // LOGICA PER ALTRE FONTI STORICHE (altre_fonti.json)
 // ==========================================================
-
-const BASE_FOLDER_ALTRE_FONTI = 'altre_fonti';
+const BASE_FOLDER_ALTRE_FONTI = 'altre_fonti'; // <--- verifica che il nome corrisponda alla tua cartella!
 
 fetch('altre_fonti.json')
-    .then(res => { 
-        if(!res.ok) throw new Error('Impossibile caricare altre_fonti.json'); 
-        return res.json(); 
-    })
-    .then(data => {
-        const container = document.getElementById('altreFontiContainer');
-        if (!container || !Array.isArray(data)) return;
+  .then(res => { 
+    if(!res.ok) throw new Error('Impossibile caricare altre_fonti.json'); 
+    return res.json(); 
+  })
+  .then(data => {
+    const container = document.getElementById('altreFontiContainer');
+    if (!container || !Array.isArray(data)) return;
 
-        data.forEach(item => {
-            // Crea il titolo principale per l'atto
-            const h3 = document.createElement('h3');
-            h3.textContent = item.titolo;
-            container.appendChild(h3);
+    data.forEach(item => {
+      const h3 = document.createElement('h3');
+      h3.textContent = item.titolo;
+      container.appendChild(h3);
 
-            // Aggiunge il sottotitolo
-            if (item.sottotitolo) {
-                const p = document.createElement('p');
-                p.innerHTML = `<em>${item.sottotitolo}</em>`;
-                container.appendChild(p);
-            }
-            
-            // Creiamo un array temporaneo per il singolo documento.
-            const tempArray = [
-                {
-                    titolo: item.titolo,
-                    cartella: item.cartella,
-                    immagini: item.immagini
-                }
-            ];
+      if (item.sottotitolo) {
+        const p = document.createElement('p');
+        p.innerHTML = `<em>${item.sottotitolo}</em>`;
+        container.appendChild(p);
+      }
 
-            // Invece di usare un container esterno, creiamo un div specifico per l'elenco/galleria
-            const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
-            const actDiv = document.createElement('div');
-            actDiv.id = actDivId;
-            actDiv.className = 'list-container';
-            container.appendChild(actDiv);
-            
-            // Chiamiamo la funzione riutilizzata
-            generateCatastoList(tempArray, actDivId, BASE_FOLDER_ALTRE_FONTI);
-        });
-    })
-    .catch(err => {
-        console.error("Errore fatale nel caricamento delle altre fonti:", err);
-        const container = document.getElementById('altreFontiContainer');
-        if(container) {
-            container.innerHTML = '<p style="color:red;">Impossibile caricare i dati delle Altre Fonti Storiche. Verificare il file altre_fonti.json.</p>';
-        }
+      const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
+      const actDiv = document.createElement('div');
+      actDiv.id = actDivId;
+      actDiv.className = 'list-container';
+      container.appendChild(actDiv);
+
+      generateCatastoList([{
+        titolo: item.titolo,
+        cartella: item.cartella,
+        immagini: item.immagini
+      }], actDivId, BASE_FOLDER_ALTRE_FONTI);
     });
-
-
-// Event delegation UNIVERSALE: Cliccando su qualsiasi miniatura (img) all'interno 
-// di qualsiasi sezione documenti (che usa openOverlay), apri l'overlay.
-document.addEventListener('click', (ev) => {
-    // Cerchiamo la miniatura più vicina all'elemento cliccato
-    const img = ev.target.closest && ev.target.closest('img');
-    
-    // Controlliamo che l'immagine sia all'interno di un contenitore che usiamo per i documenti
-    // (escludendo miniature usate per altre cose, se ce ne sono)
-    const isInsideDocumentContainer = ev.target.closest('#elencoAttiNotarili, #catastiNapoliContainer, #catastiLancianoContainer, #galleria');
-    
-    if (img && isInsideDocumentContainer) {
-        ev.preventDefault();
-        openOverlay(img.src);
+  })
+  .catch(err => {
+    console.error("Errore nel caricamento delle altre fonti:", err);
+    const container = document.getElementById('altreFontiContainer');
+    if(container) {
+      container.innerHTML = '<p style="color:red;">Impossibile caricare le Altre Fonti Storiche.</p>';
     }
-});
-
-  // Chiudi cliccando sullo sfondo (ma non se clicchi l'immagine)
-  overlay.addEventListener('click', (e) => {
-    if (e.target === overlay) closeOverlay();
   });
 
-  // ESC per chiudere
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeOverlay();
-  });
 
-  // Zoom con la rotellina: zoom verso il punto del cursore
-  overlay.addEventListener('wheel', (e) => {
-    if (!overlay.classList.contains('active')) return;
-    e.preventDefault();
-    const rect = overlayImg.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
-    const prevScale = scale;
-    const zoomFactor = (e.deltaY < 0) ? 1.12 : 0.88;
-    scale = Math.max(minScale, Math.min(maxScale, scale * zoomFactor));
-
-    // aggiusta pos per zoom verso il punto del cursore
-    posX -= (mx - rect.width / 2) * (scale / prevScale - 1);
-    posY -= (my - rect.height / 2) * (scale / prevScale - 1);
-
-    updateTransform();
-  }, { passive: false });
-
-// Pan (trascinamento) con inerzia e limiti ai bordi
-let velocityX = 0, velocityY = 0;
-let lastX = 0, lastY = 0;
-let lastTime = 0;
-let inertiaFrame;
-
-overlayImg.addEventListener('pointerdown', (e) => {
-  isPointerDown = true;
-  cancelAnimationFrame(inertiaFrame);
-  overlayImg.setPointerCapture(e.pointerId);
-  pointerStartX = e.clientX;
-  pointerStartY = e.clientY;
-  startPosX = posX;
-  startPosY = posY;
-  lastX = e.clientX;
-  lastY = e.clientY;
-  lastTime = performance.now();
-  overlay.style.cursor = 'grabbing';
+// ==========================================================
+// EVENT DELEGATION - gestione click miniature
+// ==========================================================
+document.addEventListener('click', (ev) => {
+  const img = ev.target.closest && ev.target.closest('img');
+  const validContainers = '#elencoAttiNotarili, #catastiNapoliContainer, #catastiLancianoContainer, #galleria, #altreFontiContainer';
+  const isInside = img && ev.target.closest(validContainers);
+  if (img && isInside) {
+    ev.preventDefault();
+    openOverlay(img.src);
+  }
 });
 
-overlayImg.addEventListener('pointermove', (e) => {
-  if (!isPointerDown) return;
-
-  const now = performance.now();
-  const dt = now - lastTime;
-  lastTime = now;
-
-  const dx = e.clientX - lastX;
-  const dy = e.clientY - lastY;
-  lastX = e.clientX;
-  lastY = e.clientY;
-
-  // velocità pixel/ms (serve per inerzia)
-  velocityX = dx / dt;
-  velocityY = dy / dt;
-
-  const speedFactor = 3.5 * Math.max(1, scale);
-  posX = startPosX + (e.clientX - pointerStartX) * speedFactor;
-  posY = startPosY + (e.clientY - pointerStartY) * speedFactor;
-
-  updateTransform();
-});
-
-overlayImg.addEventListener('pointerup', (e) => {
-  isPointerDown = false;
-  try { overlayImg.releasePointerCapture(e.pointerId); } catch (err) {}
-  overlay.style.cursor = 'grab';
-
-  // applica inerzia dopo il rilascio
-  const friction = 0.94; // minore = più lunga l’inerzia
-  const step = () => {
-    posX += velocityX * 30; // moltiplica per la velocità residua
-    posY += velocityY * 30;
-    velocityX *= friction;
-    velocityY *= friction;
-
-    // ferma quando la velocità è minima
-    if (Math.abs(velocityX) < 0.01 && Math.abs(velocityY) < 0.01) return;
-
-    limitToBounds();
-    updateTransform();
-    inertiaFrame = requestAnimationFrame(step);
-  };
-  requestAnimationFrame(step);
-});
-
-overlayImg.addEventListener('pointercancel', () => {
-  isPointerDown = false;
-  overlay.style.cursor = 'grab';
-});
-
-// Impedisce che la foto "scappi via" oltre lo schermo
-function limitToBounds() {
-  const rect = overlayImg.getBoundingClientRect();
-  const overW = Math.max(0, (rect.width - window.innerWidth) / 2);
-  const overH = Math.max(0, (rect.height - window.innerHeight) / 2);
-  posX = Math.min(overW, Math.max(-overW, posX));
-  posY = Math.min(overH, Math.max(-overH, posY));
-}
-
-  // Doppio click: toggle zoom / reset
-  overlayImg.addEventListener('dblclick', () => {
-    if (scale > 1) { scale = 1; posX = 0; posY = 0; }
-    else { scale = 2; } // apri al 200%
-    updateTransform();
-  });
-});
 </script>
 
 </body>
