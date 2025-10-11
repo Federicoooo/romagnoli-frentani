@@ -1,0 +1,41 @@
+﻿[
+    {
+        "titolo":  "Catasto Onciario di 1618_Catasto_Lanciano_e_Ville",
+        "cartella":  "1618_Catasto_Lanciano_e_Ville",
+        "immagini":  [
+                         "1618_Catasto_Lanciano_e_Ville\\Borgo\\Andrea_Romagnolo.jpg",
+                         "1618_Catasto_Lanciano_e_Ville\\Borgo\\Francesca_Romagnola.jpg",
+                         "1618_Catasto_Lanciano_e_Ville\\Borgo\\Giovanni_Battista_di_Pietro_Romagnolo.jpg",
+                         "1618_Catasto_Lanciano_e_Ville\\Borgo\\Giuseppe_di_Giovanni_Battista_Romagnolo.jpg",
+                         "1618_Catasto_Lanciano_e_Ville\\Borgo\\Simone_Romagnolo.jpg",
+                         "1618_Catasto_Lanciano_e_Ville\\Borgo\\Tomasso_Romagnolo.jpg",
+                         "1618_Catasto_Lanciano_e_Ville\\Lanciano_vecchia\\Antonio_Romagnolo.jpg",
+                         "1618_Catasto_Lanciano_e_Ville\\Lanciano_vecchia\\Pasquino_Romagnolo.jpg",
+                         "1618_Catasto_Lanciano_e_Ville\\Villa_Cotellessa\\Francesco_Romagnolo.jpg",
+                         "1618_Catasto_Lanciano_e_Ville\\Villa_Pietra_Costantina\\Matteo_Romagnolo.jpg"
+                     ]
+    },
+    {
+        "titolo":  "Catasto Onciario di 1743_e_1747_Catasto_Mozzagrogna_e_Lanciano",
+        "cartella":  "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano",
+        "immagini":  [
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Lanciano\\Domenico_Romagnoli.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Lanciano\\Gennaro_Romagnoli.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Carlo_Romagnoli\\Catasto_Onciario_3399_pag.009.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Fabio_di_Tommaso_Romagnoli\\Catasto_Onciario_3399_pag.015.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Fabio_di_Tommaso_Romagnoli\\Catasto_Onciario_3399_pag.016.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Giuseppe_di_Silvestro_Romagnoli\\Catasto_Onciario_3399_pag.046.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Giuseppe_di_Silvestro_Romagnoli\\Catasto_Onciario_3399_pag.047.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Giuseppe_di_Silvestro_Romagnoli\\Catasto_Onciario_3399_pag.048.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Giuseppe_di_Silvestro_Romagnoli\\Catasto_Onciario_3399_pag.049.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Paolo_Romagnoli\\Catasto_Onciario_3399_pag.034.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Paolo_Romagnoli\\Catasto_Onciario_3399_pag.035-1.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Pasquale_Romagnoli\\Catasto_Onciario_3399_pag.035.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Pasquale_Romagnoli\\Catasto_Onciario_3399_pag.036.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Sabatino_Romagnoli\\Catasto_Onciario, 3399_pag.042.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Sabatino_Romagnoli\\Catasto_Onciario_3399_pag.041-2.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Simone_di_Leonardo_Romagnoli\\Catasto_Onciario_3399_pag.040.jpg",
+                         "1743_e_1747_Catasto_Mozzagrogna_e_Lanciano\\Mozzagrogna\\Simone_di_Leonardo_Romagnoli\\Catasto_Onciario_3399_pag.041-1.jpg"
+                     ]
+    }
+]
