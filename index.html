@@ -526,48 +526,57 @@ document.addEventListener('DOMContentLoaded', () => {
       // facoltativo: mostra un messaggio di errore in pagina
     });
 
-// Carica atti.json e costruisce le miniature
-fetch('atti.json')
-  .then(res => { 
-    if(!res.ok) throw new Error('Impossibile caricare atti.json'); 
-    return res.json(); 
-  })
+// Carica altre_fonti.json
+fetch('altre_fonti.json')
+  .then(res => { if(!res.ok) throw new Error('Impossibile caricare altre_fonti.json'); return res.json(); })
   .then(data => {
-    data.forEach(atto => {
+    const container = document.getElementById('altreFontiContainer');
+    data.forEach(fonte => {
       const div = document.createElement('div');
-      div.className = 'atto';
+      div.className = 'fonte';
 
-      const titoloDiv = document.createElement('div');
-      titoloDiv.textContent = atto.titolo;
-      titoloDiv.style.cursor = 'pointer';
+      const titolo = document.createElement('h3');
+      titolo.textContent = fonte.titolo;
+      div.appendChild(titolo);
 
-      const galleria = document.createElement('div');
-      galleria.className = 'galleria-attuale';
-      galleria.style.display = 'none';
+      if (fonte.sottotitolo) {
+        const sub = document.createElement('p');
+        sub.textContent = fonte.sottotitolo;
+        div.appendChild(sub);
+      }
 
-      titoloDiv.onclick = () => {
-        galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
-        if (galleria.childElementCount === 0 && Array.isArray(atto.immagini)) {
-          atto.immagini.forEach(img => {
-            const imgElem = document.createElement('img');
-            imgElem.src = encodeURI(`atti_del_700/${atto.cartella}/${img}`);
-            imgElem.alt = atto.titolo || '';
-            imgElem.style.maxWidth = '150px';
-            imgElem.style.margin = '5px';
-            imgElem.style.cursor = 'zoom-in';
-            galleria.appendChild(imgElem);
-          });
+      const gallery = document.createElement('div');
+      gallery.className = 'galleria-attuale';
+      div.appendChild(gallery);
+
+      fonte.immagini.forEach(file => {
+        const encodedPath = encodeURI(`altre_fonti/${fonte.cartella}/${file}`);
+        if (file.toLowerCase().endsWith('.pdf')) {
+          const link = document.createElement('a');
+          link.href = encodedPath;
+          link.textContent = '📄 ' + file;
+          link.target = '_blank';
+          link.style.display = 'block';
+          gallery.appendChild(link);
+        } else {
+          const img = document.createElement('img');
+          img.src = encodedPath;
+          img.alt = fonte.titolo;
+          img.style.maxWidth = '150px';
+          img.style.margin = '5px';
+          img.style.cursor = 'zoom-in';
+          img.onclick = () => openOverlay(encodedPath);
+          gallery.appendChild(img);
         }
-      };
+      });
 
-      div.appendChild(titoloDiv);
-      div.appendChild(galleria);
-      elenco.appendChild(div);
+      container.appendChild(div);
     });
   })
-  .catch(err => {
-    console.error(err);
-  });
+  .catch(err => console.error(err));
+
+
+
 
 
 // ==========================================================
