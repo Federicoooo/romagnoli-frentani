@@ -526,6 +526,48 @@ document.addEventListener('DOMContentLoaded', () => {
       // facoltativo: mostra un messaggio di errore in pagina
     });
 
+// Carica atti.json e costruisce le miniature
+fetch('atti.json')
+  .then(res => { 
+    if(!res.ok) throw new Error('Impossibile caricare atti.json'); 
+    return res.json(); 
+  })
+  .then(data => {
+    data.forEach(atto => {
+      const div = document.createElement('div');
+      div.className = 'atto';
+
+      const titoloDiv = document.createElement('div');
+      titoloDiv.textContent = atto.titolo;
+      titoloDiv.style.cursor = 'pointer';
+
+      const galleria = document.createElement('div');
+      galleria.className = 'galleria-attuale';
+      galleria.style.display = 'none';
+
+      titoloDiv.onclick = () => {
+        galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
+        if (galleria.childElementCount === 0 && Array.isArray(atto.immagini)) {
+          atto.immagini.forEach(img => {
+            const imgElem = document.createElement('img');
+            imgElem.src = encodeURI(`atti_del_700/${atto.cartella}/${img}`);
+            imgElem.alt = atto.titolo || '';
+            imgElem.style.maxWidth = '150px';
+            imgElem.style.margin = '5px';
+            imgElem.style.cursor = 'zoom-in';
+            galleria.appendChild(imgElem);
+          });
+        }
+      };
+
+      div.appendChild(titoloDiv);
+      div.appendChild(galleria);
+      elenco.appendChild(div);
+    });
+  })
+  .catch(err => {
+    console.error(err);
+  });
 
 
 // ==========================================================
