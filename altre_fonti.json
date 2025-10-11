@@ -17,8 +17,6 @@
     "immagini": [
       "Catalogo_dei_morti_Ancona_1554-1589.pdf",
       "Catalogo_dei_morti_Ancona_1590-1599.pdf"
-      // Se il file originale è un Excel con due fogli, la soluzione migliore
-      // è dividerlo in due file PDF (o Excel se preferisci) come mostrato qui.
     ]
   }
 ]
