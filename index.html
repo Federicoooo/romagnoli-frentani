@@ -632,7 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================
   // 4. ALTRE FONTI STORICHE (altre_fonti.json)
   // ==========================================================
-  const BASE_FOLDER_ALTRE_FONTI = 'altre_fonti'; // cambia se la cartella ha altro nome
+  const BASE_FOLDER_ALTRE_FONTI = 'altre_fonti_storiche'; // cambia se la cartella ha altro nome
 
   fetch('altre_fonti.json')
     .then(res => { if (!res.ok) throw new Error('Impossibile caricare altre_fonti.json'); return res.json(); })
