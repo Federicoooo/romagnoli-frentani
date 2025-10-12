@@ -1,0 +1,21 @@
+[
+  {
+    "titolo": "Documenti vari",
+    "sottotitolo": "Materiali PDF locali",
+    "cartella": "documenti_vari",
+    "immagini": [
+      "Caratteri_demografici_e_fonti_di_Stato_nel_Mezzogiorno_preunitario.pdf",
+      "Migrazioni_di_maestranze_navali_venete_e_romagnole_verso_le_coste_di_Marche_e_Abruzzo.pdf"
+    ]
+  },
+  {
+    "titolo": "Link esterni utili",
+    "sottotitolo": "Risorse online e pagine correlate",
+    "cartella": "link",
+    "immagini": [
+      "https://www.archiviodistato.beniculturali.it/",
+      "https://www.familysearch.org/it/",
+      "https://gallica.bnf.fr/"
+    ]
+  }
+]

@@ -367,8 +367,10 @@ nel libro<br/>
 <h2>📚 Altre fonti storiche<br/></h2>
 <div id="altreFontiContainer" class="list-container">
 </div>
-<section class="section" id="documenti-link"> </section>
-<h2>📑 Documenti vari, link</h2>
+<section class="section" id="documenti-vari-link">
+  <h2>📑 Documenti vari, link</h2>
+  <div id="documentiVariLinkContainer" class="list-container"></div>
+</section>
 <p><em>Documenti vari e risorse esterne</em></p>
 <h3>Documenti</h3>
 <ul class="document-list">
@@ -515,6 +517,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTransform();
   });
 
+
   // ==========================================================
   // 1. ATTI NOTARILI (atti.json)
   // ==========================================================
@@ -654,7 +657,6 @@ function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_oncia
 }
 
 
-
   // ==========================================================
   // 3. CATASTI ONCIARI (catasti.json)
   // ==========================================================
@@ -707,8 +709,55 @@ function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_oncia
     .catch(err => console.error("Errore altre_fonti.json:", err));
 
 
+// ==========================================================
+// 5. DOCUMENTI VARI E LINK (documenti_vari_link.json)
+// ==========================================================
+const BASE_FOLDER_DOCUMENTI_VARI = 'documenti_vari_link';
+
+fetch('documenti_vari_link.json')
+  .then(res => {
+    if (!res.ok) throw new Error('Impossibile caricare documenti_vari_link.json');
+    return res.json();
+  })
+  .then(data => {
+    const container = document.getElementById('documentiVariLinkContainer');
+    if (!container || !Array.isArray(data)) return;
+
+    data.forEach(item => {
+      const h3 = document.createElement('h3');
+      h3.textContent = item.titolo;
+      container.appendChild(h3);
+
+      if (item.sottotitolo) {
+        const p = document.createElement('p');
+        p.innerHTML = `<em>${item.sottotitolo}</em>`;
+        container.appendChild(p);
+      }
+
+      const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
+      const actDiv = document.createElement('div');
+      actDiv.id = actDivId;
+      actDiv.className = 'list-container';
+      container.appendChild(actDiv);
+
+      generateCatastoList(
+        [
+          {
+            titolo: item.titolo,
+            cartella: item.cartella,
+            immagini: item.immagini
+          }
+        ],
+        actDivId,
+        BASE_FOLDER_DOCUMENTI_VARI
+      );
+    });
+  })
+  .catch(err => console.error('Errore documenti_vari_link.json:', err));
+
+
   // ==========================================================
-  // 5. EVENT DELEGATION - click su miniature
+  // 6. EVENT DELEGATION - click su miniature
   // ==========================================================
   document.addEventListener('click', (ev) => {
     const img = ev.target.closest && ev.target.closest('img');
