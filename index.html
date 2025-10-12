@@ -716,45 +716,77 @@ function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_oncia
 const BASE_FOLDER_DOCUMENTI_VARI = 'documenti_vari_link';
 
 fetch('documenti_vari_link.json')
-  .then(res => {
-    if (!res.ok) throw new Error('Impossibile caricare documenti_vari_link.json');
-    return res.json();
-  })
-  .then(data => {
-    const container = document.getElementById('documentiVariLinkContainer');
-    if (!container || !Array.isArray(data)) return;
+  .then(res => {
+    if (!res.ok) throw new Error('Impossibile caricare documenti_vari_link.json');
+    return res.json();
+  })
+  .then(data => {
+    const container = document.getElementById('documentiVariLinkContainer');
+    if (!container || !Array.isArray(data)) return;
 
-    data.forEach(item => {
-      const h3 = document.createElement('h3');
-      h3.textContent = item.titolo;
-      container.appendChild(h3);
+    data.forEach(item => {
+      const h3 = document.createElement('h3');
+      h3.textContent = item.titolo;
+      container.appendChild(h3);
 
-      if (item.sottotitolo) {
-        const p = document.createElement('p');
-        p.innerHTML = `<em>${item.sottotitolo}</em>`;
-        container.appendChild(p);
+      if (item.sottotitolo) {
+        const p = document.createElement('p');
+        p.innerHTML = `<em>${item.sottotitolo}</em>`;
+        container.appendChild(p);
+      }
+
+      // --- NUOVA LOGICA DI DISTINZIONE ---
+      // Verifichiamo se il primo elemento dell'array 'immagini' è un oggetto
+      const isExternalLinkSection = item.immagini.length > 0 && typeof item.immagini[0] === 'object';
+      
+      if (isExternalLinkSection) {
+          // GESTIONE DEI LINK ESTERNI (OGGETTI)
+          const ul = document.createElement('ul');
+          ul.style.listStyleType = 'disc';
+          ul.style.marginLeft = '20px';
+          ul.style.paddingLeft = '0';
+
+          item.immagini.forEach(linkObj => {
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              
+              a.href = linkObj.url;
+              a.target = '_blank';
+              // Qui usiamo il "nome" e l'"url" per il testo
+              a.textContent = `${linkObj.nome} (${linkObj.url})`; 
+              a.style.textDecoration = 'underline'; // Assicuriamo che appaia come un link
+              a.style.color = 'blue';
+
+              li.style.marginBottom = '5px';
+              
+              li.appendChild(a);
+              ul.appendChild(li);
+          });
+          container.appendChild(ul);
+      
+      } else {
+          // GESTIONE DEI PDF E IMMAGINI (STRINGHE) tramite generateCatastoList
+          const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
+          const actDiv = document.createElement('div');
+          actDiv.id = actDivId;
+          actDiv.className = 'list-container';
+          container.appendChild(actDiv);
+
+          generateCatastoList(
+            [
+              {
+                titolo: item.titolo,
+                cartella: item.cartella,
+                immagini: item.immagini
+              }
+            ],
+            actDivId,
+            BASE_FOLDER_DOCUMENTI_VARI
+          );
       }
-
-      const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
-      const actDiv = document.createElement('div');
-      actDiv.id = actDivId;
-      actDiv.className = 'list-container';
-      container.appendChild(actDiv);
-
-      generateCatastoList(
-        [
-          {
-            titolo: item.titolo,
-            cartella: item.cartella,
-            immagini: item.immagini
-          }
-        ],
-        actDivId,
-        BASE_FOLDER_DOCUMENTI_VARI
-      );
-    });
-  })
-  .catch(err => console.error('Errore documenti_vari_link.json:', err));
+    });
+  })
+  .catch(err => console.error('Errore documenti_vari_link.json:', err));
 
 
   // ==========================================================
