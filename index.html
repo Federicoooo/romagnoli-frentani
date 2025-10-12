@@ -559,60 +559,99 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================================
   // 2. FUNZIONE GENERICA per CATASTI e ALTRE FONTI
   // ==========================================================
-  function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_onciari') {
-    const container = document.getElementById(containerId);
-    if (!container || !Array.isArray(dataArray)) return;
-    container.innerHTML = '';
+function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_onciari') {
+  const container = document.getElementById(containerId);
+  if (!container || !Array.isArray(dataArray)) return;
+  container.innerHTML = '';
 
-    dataArray.forEach(atto => {
-      const div = document.createElement('div');
-      div.className = 'atto';
+  const isImageFile = (name) => /\.(jpe?g|png|gif|webp|bmp)$/i.test(name);
+  const isPdfFile = (name) => /\.pdf$/i.test(name);
+  const isExternalLink = (name) => /^https?:\/\//i.test(name);
 
-      const titoloDiv = document.createElement('div');
-      titoloDiv.textContent = atto.titolo;
-      titoloDiv.style.cursor = 'pointer';
+  dataArray.forEach(atto => {
+    const div = document.createElement('div');
+    div.className = 'atto';
 
-      const numImmagini = Array.isArray(atto.immagini) ? atto.immagini.length : 0;
+    const titoloDiv = document.createElement('div');
+    titoloDiv.textContent = atto.titolo;
+    titoloDiv.style.cursor = 'pointer';
 
-      if (numImmagini > 1) {
-        const galleria = document.createElement('div');
-        galleria.className = 'galleria-attuale';
-        galleria.style.display = 'none';
-        titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color:#777;">(espandi ${numImmagini} pagine)</span>`;
+    const files = Array.isArray(atto.immagini) ? atto.immagini : [];
+    const numFiles = files.length;
 
-        titoloDiv.onclick = () => {
-          galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
-          if (galleria.childElementCount === 0) {
-            atto.immagini.forEach(img => {
+    if (numFiles > 0) {
+      const galleria = document.createElement('div');
+      galleria.className = 'galleria-attuale';
+      galleria.style.display = 'none';
+
+      titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color:#777;">(espandi ${numFiles} elementi)</span>`;
+      titoloDiv.onclick = () => {
+        galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
+
+        if (galleria.childElementCount === 0) {
+          files.forEach(file => {
+            let encodedPath = '';
+            if (isExternalLink(file)) {
+              // URL esterno (non viene concatenato con baseFolder)
+              encodedPath = file;
+            } else {
+              const webPath = `${atto.cartella}/${file}`.replace(/\\/g, '/');
+              encodedPath = encodeURI(`${baseFolder}/${webPath}`);
+            }
+
+            // --- Gestione dei vari tipi ---
+            if (isPdfFile(file)) {
+              const link = document.createElement('a');
+              link.href = encodedPath;
+              link.textContent = '📄 ' + file;
+              link.target = '_blank';
+              link.rel = 'noopener noreferrer';
+              link.style.display = 'block';
+              link.style.margin = '6px 5px';
+              galleria.appendChild(link);
+            } else if (isImageFile(file)) {
               const imgElem = document.createElement('img');
-              const webPath = `${atto.cartella}/${img}`.replace(/\\/g, '/');
-              imgElem.src = encodeURI(`${baseFolder}/${webPath}`);
+              imgElem.src = encodedPath;
               imgElem.alt = atto.titolo || '';
               imgElem.style.maxWidth = '150px';
               imgElem.style.margin = '5px';
               imgElem.style.cursor = 'zoom-in';
               imgElem.onclick = () => openOverlay(imgElem.src);
               galleria.appendChild(imgElem);
-            });
-          }
-        };
+            } else if (isExternalLink(file)) {
+              const extLink = document.createElement('a');
+              extLink.href = file;
+              extLink.textContent = '🔗 Link esterno';
+              extLink.target = '_blank';
+              extLink.rel = 'noopener noreferrer';
+              extLink.style.display = 'block';
+              extLink.style.margin = '6px 5px';
+              galleria.appendChild(extLink);
+            } else {
+              const otherLink = document.createElement('a');
+              otherLink.href = encodedPath;
+              otherLink.textContent = '📁 ' + file;
+              otherLink.target = '_blank';
+              otherLink.rel = 'noopener noreferrer';
+              otherLink.style.display = 'block';
+              otherLink.style.margin = '6px 5px';
+              galleria.appendChild(otherLink);
+            }
+          });
+        }
+      };
 
-        div.appendChild(titoloDiv);
-        div.appendChild(galleria);
-      } else if (numImmagini === 1) {
-        const webPath = `${atto.cartella}/${atto.immagini[0]}`.replace(/\\/g, '/');
-        const fullSrc = encodeURI(`${baseFolder}/${webPath}`);
-        titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color:#777;">(apri immagine)</span>`;
-        titoloDiv.onclick = () => openOverlay(fullSrc);
-        div.appendChild(titoloDiv);
-      } else {
-        titoloDiv.innerHTML = `${atto.titolo} <span style="color:red;">(Nessun file trovato)</span>`;
-        div.appendChild(titoloDiv);
-      }
+      div.appendChild(titoloDiv);
+      div.appendChild(galleria);
+    } else {
+      titoloDiv.innerHTML = `${atto.titolo} <span style="color:red;">(Nessun file trovato)</span>`;
+      div.appendChild(titoloDiv);
+    }
 
-      container.appendChild(div);
-    });
-  }
+    container.appendChild(div);
+  });
+}
+
 
 
   // ==========================================================
