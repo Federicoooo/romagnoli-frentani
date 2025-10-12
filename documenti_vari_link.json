@@ -17,9 +17,26 @@
         "nome": "Archivio di Stato - Chieti",
         "url": "https://archiviodistatochieti.cultura.gov.it/home"
       },
-      "https://www.archiviodistato.beniculturali.it/",
-      "https://www.familysearch.org/it/",
-      "https://gallica.bnf.fr/"
+      {
+        "nome": "FamilySearch - Trova la tua famiglia. Scopri te stesso",
+        "url": "https://www.familysearch.org/it/"
+      },
+      {
+        "nome": "Cognomix.it - Tutto sui Cognomi",
+        "url": "https://www.cognomix.it/"
+      },
+      {
+        "nome": "Wikipedia: Ancona",
+        "url": "https://it.wikipedia.org/wiki/Ank%C3%B3n"
+      },
+      {
+        "nome": "Wikipedia: Famiglia Romagnoli",
+        "url": "https://it.wikipedia.org/wiki/Romagnoli_(famiglia)"
+      },
+      {
+        "nome": "Wikipedia: Storia della Romagna",
+        "url": "https://it.wikipedia.org/wiki/Storia_della_Romagna"
+      }
     ]
   }
 ]
