@@ -725,9 +725,10 @@ fetch('documenti_vari_link.json')
     if (!container || !Array.isArray(data)) return;
 
     data.forEach(item => {
+      // 1. TITOLO PRINCIPALE (non cliccabile)
       const h3 = document.createElement('h3');
       h3.textContent = item.titolo;
-      h3.style.cursor = 'pointer'; // Aggiungiamo il cursore di puntamento
+      // Rimosso: h3.style.cursor = 'pointer'; per eliminare la manina sul titolo h3
       container.appendChild(h3);
 
       if (item.sottotitolo) {
@@ -736,60 +737,70 @@ fetch('documenti_vari_link.json')
         container.appendChild(p);
       }
 
-      // --- LOGICA DI DISTINZIONE ---
-      const isExternalLinkSection = item.immagini.length > 0 && typeof item.immagini[0] === 'object';
-      
-      if (isExternalLinkSection) {
-          // GESTIONE DEI LINK ESTERNI (OGGETTI) con menù a tendina
-          const ul = document.createElement('ul');
-          ul.className = 'links-dropdown'; // Nuova classe per il contenitore
-          ul.style.listStyleType = 'disc';
-          ul.style.marginLeft = '20px';
-          ul.style.paddingLeft = '0';
-          ul.style.display = 'none'; // NASCONDI INIZIALMENTE
+      // --- LOGICA DI DISTINZIONE ---
+      const isExternalLinkSection = item.immagini.length > 0 && typeof item.immagini[0] === 'object';
+      
+      if (isExternalLinkSection) {
+          // GESTIONE DEI LINK ESTERNI (OGGETTI) con menù a tendina
+          
+          const numLink = item.immagini.length;
+          
+          // 2. CONTENITORE NASCOSTO (La tendina)
+          const ul = document.createElement('ul');
+          ul.className = 'links-dropdown'; 
+          ul.style.listStyleType = 'disc';
+          ul.style.marginLeft = '20px';
+          ul.style.paddingLeft = '0';
+          ul.style.display = 'none'; // NASCONDI INIZIALMENTE
 
-          // Aggiungiamo l'handler per l'espansione al click sul titolo h3
-          h3.onclick = () => {
-             ul.style.display = (ul.style.display === 'none') ? 'block' : 'none';
-          };
+          // 3. DIV CLICCABILE (l'elemento che ha la manina)
+          const dropDiv = document.createElement('div');
+          dropDiv.innerHTML = `${item.titolo} <span style="font-size:0.8em; color: #777;">(espandi ${numLink} link)</span>`;
+          dropDiv.style.cursor = 'pointer'; // La manina va solo qui!
+          container.appendChild(dropDiv);
 
-          item.immagini.forEach(linkObj => {
-              const li = document.createElement('li');
-              const a = document.createElement('a');
-              
-              a.href = linkObj.url;
-              a.target = '_blank';
-              a.textContent = linkObj.nome; 
-              a.style.textDecoration = 'underline'; 
-              a.style.color = 'blue';
+          // Aggiungiamo l'handler per l'espansione al click sul dropDiv
+          dropDiv.onclick = () => {
+             ul.style.display = (ul.style.display === 'none') ? 'block' : 'none';
+          };
 
-              li.style.marginBottom = '5px';
-              
-              li.appendChild(a);
-              ul.appendChild(li);
-          });
-          container.appendChild(ul);
-      
-      } else {
-          // GESTIONE DEI PDF E IMMAGINI (STRINGHE)
-          const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
-          const actDiv = document.createElement('div');
-          actDiv.id = actDivId;
-          actDiv.className = 'list-container';
-          container.appendChild(actDiv);
+          item.immagini.forEach(linkObj => {
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              
+              a.href = linkObj.url;
+              a.target = '_blank';
+              a.textContent = linkObj.nome; 
+              a.style.textDecoration = 'underline'; 
+              a.style.color = 'blue';
 
-          generateCatastoList(
-            [
-              {
-                titolo: item.titolo,
-                cartella: item.cartella,
-                immagini: item.immagini
-              }
-            ],
-            actDivId,
-            BASE_FOLDER_DOCUMENTI_VARI
-          );
-      }
+              li.style.marginBottom = '5px';
+              
+              li.appendChild(a);
+              ul.appendChild(li);
+          });
+          container.appendChild(ul);
+      
+      } else {
+          // GESTIONE DEI PDF E IMMAGINI (STRINGHE) tramite generateCatastoList
+          const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
+          const actDiv = document.createElement('div');
+          actDiv.id = actDivId;
+          actDiv.className = 'list-container';
+          container.appendChild(actDiv);
+
+          generateCatastoList(
+            [
+              {
+                titolo: item.titolo,
+                cartella: item.cartella,
+                immagini: item.immagini
+              }
+            ],
+            actDivId,
+            BASE_FOLDER_DOCUMENTI_VARI
+          );
+      }
     });
   })
   .catch(err => console.error('Errore documenti_vari_link.json:', err));
