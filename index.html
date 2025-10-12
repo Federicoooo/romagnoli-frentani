@@ -753,7 +753,7 @@ fetch('documenti_vari_link.json')
               a.href = linkObj.url;
               a.target = '_blank';
               // Qui usiamo il "nome" e l'"url" per il testo
-              a.textContent = `${linkObj.nome} (${linkObj.url})`; 
+              a.textContent = linkObj.nome; 
               a.style.textDecoration = 'underline'; // Assicuriamo che appaia come un link
               a.style.color = 'blue';
 
