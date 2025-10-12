@@ -477,12 +477,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function closeOverlay() {
-    overlay.classList.remove('active');
-    overlay.style.display = 'none';
-    overlayImg.src = '';
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
+  overlayImg.blur(); // <-- aggiungi questa riga PRIMA di nascondere
+  overlay.classList.remove('active');
+  overlay.style.display = 'none';
+  overlayImg.src = '';
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
 
   // Chiudi overlay al click
   overlay.addEventListener('click', (e) => {
