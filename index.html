@@ -727,6 +727,7 @@ fetch('documenti_vari_link.json')
     data.forEach(item => {
       const h3 = document.createElement('h3');
       h3.textContent = item.titolo;
+      h3.style.cursor = 'pointer'; // Aggiungiamo il cursore di puntamento
       container.appendChild(h3);
 
       if (item.sottotitolo) {
@@ -735,16 +736,22 @@ fetch('documenti_vari_link.json')
         container.appendChild(p);
       }
 
-      // --- NUOVA LOGICA DI DISTINZIONE ---
-      // Verifichiamo se il primo elemento dell'array 'immagini' è un oggetto
+      // --- LOGICA DI DISTINZIONE ---
       const isExternalLinkSection = item.immagini.length > 0 && typeof item.immagini[0] === 'object';
       
       if (isExternalLinkSection) {
-          // GESTIONE DEI LINK ESTERNI (OGGETTI)
+          // GESTIONE DEI LINK ESTERNI (OGGETTI) con menù a tendina
           const ul = document.createElement('ul');
+          ul.className = 'links-dropdown'; // Nuova classe per il contenitore
           ul.style.listStyleType = 'disc';
           ul.style.marginLeft = '20px';
           ul.style.paddingLeft = '0';
+          ul.style.display = 'none'; // NASCONDI INIZIALMENTE
+
+          // Aggiungiamo l'handler per l'espansione al click sul titolo h3
+          h3.onclick = () => {
+             ul.style.display = (ul.style.display === 'none') ? 'block' : 'none';
+          };
 
           item.immagini.forEach(linkObj => {
               const li = document.createElement('li');
@@ -752,9 +759,8 @@ fetch('documenti_vari_link.json')
               
               a.href = linkObj.url;
               a.target = '_blank';
-              // Qui usiamo il "nome" e l'"url" per il testo
               a.textContent = linkObj.nome; 
-              a.style.textDecoration = 'underline'; // Assicuriamo che appaia come un link
+              a.style.textDecoration = 'underline'; 
               a.style.color = 'blue';
 
               li.style.marginBottom = '5px';
@@ -765,7 +771,7 @@ fetch('documenti_vari_link.json')
           container.appendChild(ul);
       
       } else {
-          // GESTIONE DEI PDF E IMMAGINI (STRINGHE) tramite generateCatastoList
+          // GESTIONE DEI PDF E IMMAGINI (STRINGHE)
           const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
           const actDiv = document.createElement('div');
           actDiv.id = actDivId;
