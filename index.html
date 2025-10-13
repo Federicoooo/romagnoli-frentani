@@ -579,7 +579,7 @@ function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_oncia
               encodedPath = file;
             } else {
               const webPath = `${atto.cartella}/${file}`.replace(/\\/g, '/');
-              encodedPath = encodeURI(`${baseFolder}/${webPath}`);
+              encodedPath = `${baseFolder}/${encodeURIComponent(webPath).replace(/%2F/g, '/')}`;
             }
 
             // --- Gestione dei vari tipi ---
