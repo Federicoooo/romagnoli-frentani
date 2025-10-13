@@ -420,6 +420,22 @@ document.addEventListener('DOMContentLoaded', () => {
     overlayImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
   }
 
+// ----- helper: costruisce un path sicuro UTF-8 codificando ogni segmento -----
+function buildSafePath(baseFolder, cartella, filename) {
+  // cartella potrebbe già contenere slash (o essere vuota)
+  const segments = [];
+  if (cartella && cartella.length) {
+    // split su slash e codifica ogni segmento
+    cartella.split('/').forEach(s => {
+      if (s && s.length) segments.push(encodeURIComponent(s));
+    });
+  }
+  // filename può essere undefined/null per casi particolari
+  if (filename && filename.length) segments.push(encodeURIComponent(filename));
+  // ricostruisci il path con slash non codificate
+  return `${baseFolder}/${segments.join('/')}`.replace(/%2F/g, '/');
+}
+
   function openOverlay(src) {
     overlayImg.src = src;
     scale = 1; posX = 0; posY = 0;
@@ -520,7 +536,7 @@ overlayImg.addEventListener('touchend', () => {
           if (galleria.childElementCount === 0 && Array.isArray(atto.immagini)) {
             atto.immagini.forEach(img => {
               const imgElem = document.createElement('img');
-              imgElem.src = `atti_del_700/${encodeURIComponent(`${atto.cartella}/${img}`).replace(/%2F/g, '/')}`;
+              imgElem.src = buildSafePath('atti_del_700', atto.cartella, img);
               imgElem.alt = atto.titolo || '';
               imgElem.style.maxWidth = '150px';
               imgElem.style.margin = '5px';
@@ -578,9 +594,8 @@ function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_oncia
               // URL esterno (non viene concatenato con baseFolder)
               encodedPath = file;
             } else {
-              const webPath = `${atto.cartella}/${file}`.replace(/\\/g, '/');
-              encodedPath = `${baseFolder}/${encodeURIComponent(webPath).replace(/%2F/g, '/')}`;
-            }
+  encodedPath = buildSafePath(baseFolder, atto.cartella, file);
+}
 
             // --- Gestione dei vari tipi ---
             if (isPdfFile(file)) {
