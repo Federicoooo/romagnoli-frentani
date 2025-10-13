@@ -520,7 +520,7 @@ overlayImg.addEventListener('touchend', () => {
           if (galleria.childElementCount === 0 && Array.isArray(atto.immagini)) {
             atto.immagini.forEach(img => {
               const imgElem = document.createElement('img');
-              imgElem.src = encodeURI(`atti_del_700/${atto.cartella}/${img}`);
+              imgElem.src = `atti_del_700/${encodeURIComponent(`${atto.cartella}/${img}`).replace(/%2F/g, '/')}`;
               imgElem.alt = atto.titolo || '';
               imgElem.style.maxWidth = '150px';
               imgElem.style.margin = '5px';
