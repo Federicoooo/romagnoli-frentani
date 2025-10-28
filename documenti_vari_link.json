@@ -6,6 +6,7 @@
     "immagini": [
       "Caratteri_demografici_e_fonti_di_Stato_nel_Mezzogiorno_preunitario.pdf",
       "Migrazioni_di_maestranze_navali_venete_e_romagnole_verso_le_coste_di_Marche_e_Abruzzo.pdf"
+      "Presenza_famiglie_Romagnoli_2025.xlsx"
     ]
   },
   {
@@ -50,9 +51,13 @@
         "url": "https://it.wikipedia.org/wiki/Romagnoli_(famiglia)"
       },
       {
-        "nome": "Wikipedia: Comune di Jesi",
+        "nome": "Wikipedia: Jesi",
         "url": "https://it.wikipedia.org/wiki/Jesi"
       },
+      {
+        "nome": "Wikipedia: Ostra",
+        "url": "https://it.wikipedia.org/wiki/Ostra_(Italia)"
+      },      
       {
         "nome": "Wikipedia: Storia della Romagna",
         "url": "https://it.wikipedia.org/wiki/Storia_della_Romagna"
