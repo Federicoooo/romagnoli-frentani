@@ -11,11 +11,11 @@
   <meta property="og:description" content="Documenti digitali del libro di Federico Romagnoli" />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="it_IT" />
-  <meta property="og:url" content="https://github.com/Federicoooo/romagnoli-frentani" />
+  <meta property="og:url" content="https://federicoooo.github.io/romagnoli-frentani/" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="I Romagnoli frentani – Evidenze storiche e spunti di ricerca" />
   <meta name="twitter:description" content="Documenti digitali del libro di Federico Romagnoli" />
-  <link rel="canonical" href="https://github.com/Federicoooo/romagnoli-frentani" />
+  <link rel="canonical" href="https://federicoooo.github.io/romagnoli-frentani/" />
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="shortcut icon" type="image/png" href="favicon.png">
   <script type="application/ld+json">
@@ -86,16 +86,6 @@
       color: #666;
     }
 
-    .book-info .author-link {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    .book-info .author-link:hover {
-      color: var(--secondary-color);
-      text-decoration: underline;
-    }
-
     .hero {
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       color: white;
@@ -116,7 +106,7 @@
 
     .quick-links {
       background: white;
-      padding: 20px 0;
+      padding: 40px 0;
       margin: -40px 0 40px 0;
       position: relative;
       box-shadow: var(--shadow);
@@ -208,7 +198,7 @@
     .doc-link:hover { color: var(--accent-color); }
 
     .external-link::after {
-      content: " â†—";
+      content: " ↗";
       font-size: 0.8em;
     }
 
@@ -222,10 +212,6 @@
 
     footer a {
       color: white;
-      text-decoration: none;
-    }
-
-    footer a:hover {
       text-decoration: underline;
     }
 
@@ -335,6 +321,17 @@
   border-radius: 4px;
 }
 
+
+a.author-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.author-link:hover {
+  text-decoration: underline;
+}
+
+
 </style>
 </head>
 
@@ -343,8 +340,8 @@
 <header> </header>
 <div class="container">
 <div class="header-content">
-<h1>I Romagnoli frentani – Evidenze storiche e spunti di ricerca</h1>
-<div class="book-info"><br/><strong><a class="author-link" href="federico-romagnoli.html">Federico Romagnoli</a></strong><br/>
+<h1>I Romagnoli frentani - Evidenze storiche e spunti di ricerca</h1>
+<div class="book-info"><br/><strong><a href="federico-romagnoli.html" class="author-link">Federico Romagnoli</a></strong><br/>
 ISBN: 9798271447389 | DOI: 10.5281/zenodo.17623724</div>
 </div>
 </div>
@@ -353,7 +350,7 @@ ISBN: 9798271447389 | DOI: 10.5281/zenodo.17623724</div>
 <h2>Documenti Digitali</h2>
 <p>Repository completo dei documenti storici e materiali citati
 nel libro<br/>
-"I Romagnoli frentani – Evidenze storiche e spunti di ricerca"</p>
+"I Romagnoli frentani - Evidenze storiche e spunti di ricerca"</p>
 <p><em>Prima Edizione: Ottobre 2025</em></p>
 </div>
 </div>
@@ -425,8 +422,8 @@ nel libro<br/>
 
   <footer>
     <div class="container">
-      <p><strong>I Romagnoli frentani – Evidenze storiche e spunti di ricerca</strong><br />
-      © 2025-<span id="current-year">2026</span> <a href="federico-romagnoli.html">Federico Romagnoli</a>. Tutti i diritti riservati.</p>
+      <p><strong>I Romagnoli frentani - Evidenze storiche e spunti di ricerca</strong><br />
+      © 2025-<span id="current-year">2026</span> <a href="federico-romagnoli.html" class="author-link"> <a href="federico-romagnoli.html" class="author-link">Federico Romagnoli</a>. Tutti i diritti riservati.</p>
     </div>
   </footer>
 
@@ -437,11 +434,6 @@ nel libro<br/>
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  const yearSpan = document.getElementById('current-year');
-  if (yearSpan) {
-    yearSpan.textContent = new Date().getFullYear();
-  }
-
   const elenco = document.getElementById('elencoAttiNotarili');
   const overlay = document.getElementById('imageOverlay');
   const overlayImg = document.getElementById('overlayImg');
@@ -463,7 +455,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ----- helper: costruisce un path sicuro UTF-8 codificando ogni segmento -----
 function buildSafePath(baseFolder, cartella, filename) {
-  // cartella potrebbe giÃ  contenere slash (o essere vuota)
+  // cartella potrebbe già contenere slash (o essere vuota)
   const segments = [];
   if (cartella && cartella.length) {
     // split su slash e codifica ogni segmento
@@ -471,7 +463,7 @@ function buildSafePath(baseFolder, cartella, filename) {
       if (s && s.length) segments.push(encodeURIComponent(s));
     });
   }
-  // filename puÃ² essere undefined/null per casi particolari
+  // filename può essere undefined/null per casi particolari
   if (filename && filename.length) segments.push(encodeURIComponent(filename));
   // ricostruisci il path con slash non codificate
   return `${baseFolder}/${segments.join('/')}`.replace(/%2F/g, '/');
@@ -539,7 +531,7 @@ overlayImg.addEventListener('touchmove', (ev) => {
     if (lastTouchDistance) {
       const delta = dist - lastTouchDistance;
       if (Math.abs(delta) > 5) {
-        scale += delta * 0.005; // sensibilitÃ  zoom
+        scale += delta * 0.005; // sensibilità zoom
         scale = Math.min(Math.max(scale, minScale), maxScale);
         updateTransform();
       }
@@ -635,18 +627,19 @@ function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_oncia
               // URL esterno (non viene concatenato con baseFolder)
               encodedPath = file;
             } else {
-  encodedPath = buildSafePath(baseFolder, atto.cartella, file);
-}
+              encodedPath = buildSafePath(baseFolder, atto.cartella, file);
+            }
 
             // --- Gestione dei vari tipi ---
             if (isPdfFile(file)) {
               const link = document.createElement('a');
               link.href = encodedPath;
-              link.textContent = 'ðŸ“„ ' + file;
+              link.textContent = '📄 ' + file;
               link.target = '_blank';
               link.rel = 'noopener noreferrer';
               link.style.display = 'block';
               link.style.margin = '6px 5px';
+              link.style.color = '#3498db';
               galleria.appendChild(link);
             } else if (isImageFile(file)) {
               const imgElem = document.createElement('img');
@@ -660,20 +653,22 @@ function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_oncia
             } else if (isExternalLink(file)) {
               const extLink = document.createElement('a');
               extLink.href = file;
-              extLink.textContent = 'ðŸ”— Link esterno';
+              extLink.textContent = '🔗 Link esterno';
               extLink.target = '_blank';
               extLink.rel = 'noopener noreferrer';
               extLink.style.display = 'block';
               extLink.style.margin = '6px 5px';
+              extLink.style.color = '#3498db';
               galleria.appendChild(extLink);
             } else {
               const otherLink = document.createElement('a');
               otherLink.href = encodedPath;
-              otherLink.textContent = 'ðŸ“ ' + file;
+              otherLink.textContent = '📁 ' + file;
               otherLink.target = '_blank';
               otherLink.rel = 'noopener noreferrer';
               otherLink.style.display = 'block';
               otherLink.style.margin = '6px 5px';
+              otherLink.style.color = '#3498db';
               galleria.appendChild(otherLink);
             }
           });
@@ -750,42 +745,42 @@ function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_oncia
 const BASE_FOLDER_DOCUMENTI_VARI = 'documenti_vari_link';
 
 fetch('documenti_vari_link.json')
-Â  .then(res => {
-Â  Â  if (!res.ok) throw new Error('Impossibile caricare documenti_vari_link.json');
-Â  Â  return res.json();
-Â  })
-Â  .then(data => {
-Â  Â  const container = document.getElementById('documentiVariLinkContainer');
-Â  Â  if (!container || !Array.isArray(data)) return;
+  .then(res => {
+    if (!res.ok) throw new Error('Impossibile caricare documenti_vari_link.json');
+    return res.json();
+  })
+  .then(data => {
+    const container = document.getElementById('documentiVariLinkContainer');
+    if (!container || !Array.isArray(data)) return;
 
-Â  Â  data.forEach(item => {
-Â  Â  Â  // 1. TITOLO PRINCIPALE (non cliccabile)
-Â  Â  Â  const h3 = document.createElement('h3');
-Â  Â  Â  h3.textContent = item.titolo;
-Â  Â  Â  // Rimosso: h3.style.cursor = 'pointer'; per eliminare la manina sul titolo h3
-Â  Â  Â  container.appendChild(h3);
+    data.forEach(item => {
+      // 1. TITOLO PRINCIPALE (non cliccabile)
+      const h3 = document.createElement('h3');
+      h3.textContent = item.titolo;
+      // Rimosso: h3.style.cursor = 'pointer'; per eliminare la manina sul titolo h3
+      container.appendChild(h3);
 
-Â  Â  Â  if (item.sottotitolo) {
-Â  Â  Â  Â  const p = document.createElement('p');
-Â  Â  Â  Â  p.innerHTML = `<em>${item.sottotitolo}</em>`;
-Â  Â  Â  Â  container.appendChild(p);
-Â  Â  Â  }
+      if (item.sottotitolo) {
+        const p = document.createElement('p');
+        p.innerHTML = `<em>${item.sottotitolo}</em>`;
+        container.appendChild(p);
+      }
 
-Â  Â  Â  // --- LOGICA DI DISTINZIONE ---
-Â  Â  Â  const isExternalLinkSection = item.immagini.length > 0 && typeof item.immagini[0] === 'object';
-Â  Â  Â Â 
-Â  Â  Â  if (isExternalLinkSection) {
-Â  Â  Â  Â  Â  // GESTIONE DEI LINK ESTERNI (OGGETTI) con menÃ¹ a tendina
-Â  Â  Â  Â  Â  
+      // --- LOGICA DI DISTINZIONE ---
+      const isExternalLinkSection = item.immagini.length > 0 && typeof item.immagini[0] === 'object';
+      
+      if (isExternalLinkSection) {
+          // GESTIONE DEI LINK ESTERNI (OGGETTI) con menù a tendina
+          
           const numLink = item.immagini.length;
           
           // 2. CONTENITORE NASCOSTO (La tendina)
-Â  Â  Â  Â  Â  const ul = document.createElement('ul');
-Â  Â  Â  Â  Â  ul.className = 'links-dropdown'; 
-Â  Â  Â  Â  Â  ul.style.listStyleType = 'disc';
-Â  Â  Â  Â  Â  ul.style.marginLeft = '20px';
-Â  Â  Â  Â  Â  ul.style.paddingLeft = '0';
-Â  Â  Â  Â  Â  ul.style.display = 'none'; // NASCONDI INIZIALMENTE
+          const ul = document.createElement('ul');
+          ul.className = 'links-dropdown'; 
+          ul.style.listStyleType = 'disc';
+          ul.style.marginLeft = '20px';
+          ul.style.paddingLeft = '0';
+          ul.style.display = 'none'; // NASCONDI INIZIALMENTE
 
           // 3. DIV CLICCABILE (l'elemento che ha la manina)
           const dropDiv = document.createElement('div');
@@ -793,51 +788,51 @@ fetch('documenti_vari_link.json')
           dropDiv.style.cursor = 'pointer'; // La manina va solo qui!
           container.appendChild(dropDiv);
 
-Â  Â  Â  Â  Â  // Aggiungiamo l'handler per l'espansione al click sul dropDiv
-Â  Â  Â  Â  Â  dropDiv.onclick = () => {
-Â  Â  Â  Â  Â  Â  Â ul.style.display = (ul.style.display === 'none') ? 'block' : 'none';
-Â  Â  Â  Â  Â  };
+          // Aggiungiamo l'handler per l'espansione al click sul dropDiv
+          dropDiv.onclick = () => {
+             ul.style.display = (ul.style.display === 'none') ? 'block' : 'none';
+          };
 
-Â  Â  Â  Â  Â  item.immagini.forEach(linkObj => {
-Â  Â  Â  Â  Â  Â  Â  const li = document.createElement('li');
-Â  Â  Â  Â  Â  Â  Â  const a = document.createElement('a');
-Â  Â  Â  Â  Â  Â  Â Â 
-Â  Â  Â  Â  Â  Â  Â  a.href = linkObj.url;
-Â  Â  Â  Â  Â  Â  Â  a.target = '_blank';
-Â  Â  Â  Â  Â  Â  Â  a.textContent = linkObj.nome;Â 
-Â  Â  Â  Â  Â  Â  Â  a.style.textDecoration = 'underline';Â 
-Â  Â  Â  Â  Â  Â  Â  a.style.color = 'blue';
+          item.immagini.forEach(linkObj => {
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              
+              a.href = linkObj.url;
+              a.target = '_blank';
+              a.textContent = linkObj.nome; 
+              a.style.textDecoration = 'underline'; 
+              a.style.color = '#3498db';
 
-Â  Â  Â  Â  Â  Â  Â  li.style.marginBottom = '5px';
-Â  Â  Â  Â  Â  Â  Â Â 
-Â  Â  Â  Â  Â  Â  Â  li.appendChild(a);
-Â  Â  Â  Â  Â  Â  Â  ul.appendChild(li);
-Â  Â  Â  Â  Â  });
-Â  Â  Â  Â  Â  container.appendChild(ul);
-Â  Â  Â Â 
-Â  Â  Â  } else {
-Â  Â  Â  Â  Â  // GESTIONE DEI PDF E IMMAGINI (STRINGHE) tramite generateCatastoList
-Â  Â  Â  Â  Â  const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
-Â  Â  Â  Â  Â  const actDiv = document.createElement('div');
-Â  Â  Â  Â  Â  actDiv.id = actDivId;
-Â  Â  Â  Â  Â  actDiv.className = 'list-container';
-Â  Â  Â  Â  Â  container.appendChild(actDiv);
+              li.style.marginBottom = '5px';
+              
+              li.appendChild(a);
+              ul.appendChild(li);
+          });
+          container.appendChild(ul);
+      
+      } else {
+          // GESTIONE DEI PDF E IMMAGINI (STRINGHE) tramite generateCatastoList
+          const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
+          const actDiv = document.createElement('div');
+          actDiv.id = actDivId;
+          actDiv.className = 'list-container';
+          container.appendChild(actDiv);
 
-Â  Â  Â  Â  Â  generateCatastoList(
-Â  Â  Â  Â  Â  Â  [
-Â  Â  Â  Â  Â  Â  Â  {
-Â  Â  Â  Â  Â  Â  Â  Â  titolo: item.titolo,
-Â  Â  Â  Â  Â  Â  Â  Â  cartella: item.cartella,
-Â  Â  Â  Â  Â  Â  Â  Â  immagini: item.immagini
-Â  Â  Â  Â  Â  Â  Â  }
-Â  Â  Â  Â  Â  Â  ],
-Â  Â  Â  Â  Â  Â  actDivId,
-Â  Â  Â  Â  Â  Â  BASE_FOLDER_DOCUMENTI_VARI
-Â  Â  Â  Â  Â  );
-Â  Â  Â  }
-Â  Â  });
-Â  })
-Â  .catch(err => console.error('Errore documenti_vari_link.json:', err));
+          generateCatastoList(
+            [
+              {
+                titolo: item.titolo,
+                cartella: item.cartella,
+                immagini: item.immagini
+              }
+            ],
+            actDivId,
+            BASE_FOLDER_DOCUMENTI_VARI
+          );
+      }
+    });
+  })
+  .catch(err => console.error('Errore documenti_vari_link.json:', err));
 
 
   // ==========================================================
@@ -853,6 +848,10 @@ fetch('documenti_vari_link.json')
     }
   });
 });
+</script>
+
+<script>
+  document.getElementById('current-year').textContent = new Date().getFullYear();
 </script>
 
 
