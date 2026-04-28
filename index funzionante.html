@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Romagnoli frentani - Evidenze storiche e spunti di ricerca | Documenti Digitali</title>
+  <meta name="description" content="Repository digitale del libro 'I Romagnoli frentani - Evidenze storiche e spunti di ricerca' di Federico Romagnoli. Documenti storici e materiali integrativi." />
+  <meta property="og:title" content="I Romagnoli frentani - Evidenze storiche e spunti di ricerca" />
+  <meta property="og:description" content="Documenti digitali del libro di Federico Romagnoli" />
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="shortcut icon" type="image/png" href="favicon.png">
+
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --bg-light: #ecf0f1;
+      --text-dark: #333;
+      --shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body { 
+      font-family: Georgia, serif; 
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: #f8f9fa;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background: white;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    h1 { 
+      color: var(--primary-color);
+      margin: 0;
+      font-size: 2em;
+    }
+
+    .book-info {
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .hero h2 {
+      margin: 0 0 20px 0;
+      font-size: 2.5em;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      max-width: 800px;
+      margin: 0 auto 20px;
+    }
+
+    .quick-links {
+      background: white;
+      padding: 40px 0;
+      margin: -40px 0 40px 0;
+      position: relative;
+      box-shadow: var(--shadow);
+    }
+
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .link-card {
+      background: var(--bg-light);
+      padding: 20px;
+      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .link-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow);
+    }
+
+    .link-card h3 {
+      color: var(--primary-color);
+      margin: 10px 0;
+    }
+
+    .instructions {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 40px 0;
+    }
+
+    .instructions h3 {
+      margin-top: 0;
+      color: #856404;
+    }
+
+    .main-content {
+      background: white;
+      padding: 40px 0;
+      margin: 40px 0;
+      box-shadow: var(--shadow);
+    }
+
+    .section {
+      margin: 40px 0;
+    }
+
+    .section h2 {
+      color: var(--primary-color);
+      border-bottom: 3px solid var(--secondary-color);
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    .section h3 {
+      color: var(--primary-color);
+      margin: 25px 0 15px 0;
+    }
+
+    .document-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .document-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .document-list li:last-child {
+      border-bottom: none;
+    }
+
+    .doc-link {
+      color: var(--secondary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .doc-link:hover { color: var(--accent-color); }
+
+    .external-link::after {
+      content: " ↗";
+      font-size: 0.8em;
+    }
+
+    footer {
+      background: var(--primary-color);
+      color: white;
+      padding: 40px 0;
+      margin-top: 80px;
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background: var(--secondary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      margin: 5px;
+    }
+
+    .btn:hover { background: var(--accent-color); }
+
+    @media (max-width: 768px) {
+      .hero h2 { font-size: 1.8em; }
+      .header-content { text-align: center; }
+      h1 { font-size: 1.5em; }
+    }
+
+    /* Sezione Atti Notarili e Galleria */
+    #elencoAttiNotarili .atto {
+      cursor: pointer;
+      margin-bottom: 6px;
+      padding: 6px 8px;
+      border-radius: 4px;
+      transition: background 0.15s;
+    }
+    #elencoAttiNotarili .atto:hover { background: #f0f4f8; }
+    #titoloAtto {
+      margin-top: 20px;
+      color: var(--primary-color);
+      font-size: 1.2em;
+    }
+    #galleria {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    #galleria img {
+      max-width: 150px;
+      height: auto;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    }
+    .galleria-attuale {
+      margin-top: 8px;
+      display: none;
+    }
+    .galleria-attuale img {
+      border: 1px solid #999;
+      border-radius: 4px;
+      max-width: 150px;
+      margin: 5px;
+      vertical-align: middle;
+    }
+  
+/* --- Galleria: zoom e pan --- */
+#imageOverlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+  overflow: hidden;
+}
+
+#overlayImg {
+  max-width: 90%;
+  max-height: 90%;
+  transform-origin: center center;
+  transition: transform 0.1s ease;
+}
+
+/* Overlay per immagine ingrandita (zoom + pan) */
+#imageOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+  overflow: hidden;
+}
+#imageOverlay.active { display: flex; }
+
+#overlayImg {
+  max-width: 90%;
+  max-height: 90%;
+  transform-origin: center center;
+  transition: transform 0.06s linear;
+  will-change: transform;
+  user-select: none;
+  touch-action: none; /* necessario per pointer events su touch */
+  box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+  border-radius: 4px;
+}
+
+</style>
+</head>
+
+<body>
+
+<header> </header>
+<div class="container">
+<div class="header-content">
+<h1>I Romagnoli frentani - Evidenze storiche e spunti di ricerca</h1>
+<div class="book-info"><br/><strong>Federico Romagnoli</strong><br/>
+ISBN: 9798271447389 | DOI: 10.5281/zenodo.17623724</div>
+</div>
+</div>
+<div class="hero">
+<div class="container">
+<h2>Documenti Digitali</h2>
+<p>Repository completo dei documenti storici e materiali citati
+nel libro<br/>
+"I Romagnoli frentani - Evidenze storiche e spunti di ricerca"</p>
+<p><em>Prima Edizione: Ottobre 2025</em></p>
+</div>
+</div>
+<div class="quick-links">
+<div class="container">
+<h2 style="text-align: center; margin-bottom: 30px;">Accesso Rapido</h2>
+<div class="links-grid">
+<div class="link-card">
+<h3>📋 Catasti onciari</h3>
+<p>Napoli 1743-47 e Lanciano 1618</p>
+<a class="btn" href="#catasti-onciari">Vai ai catasti</a> </div>
+<div class="link-card">
+<h3>📚 Altre fonti storiche</h3>
+<p>Atto del 1719 e Catalogo Ancona</p>
+<a class="btn" href="#altre-fonti-storiche">Vai alle altre fonti</a> </div>
+<div class="link-card">
+<h3>📑 Documenti vari/Link</h3>
+<p>Documenti vari e risorse esterne</p>
+<a class="btn" href="#documenti-vari-link">Vai ai documenti</a> </div>
+<div class="link-card">
+<h3>📜 Atti notarili del '700</h3>
+<p>I Romagnoli nel '700<br/>
+</p>
+<a class="btn" href="#atti-notarili-700">Vai agli atti</a> </div>
+</div>
+</div>
+</div>
+<main class="container"><div class="instructions" style="padding-left: 20px;">
+<h3>📖 Come utilizzare questo repository</h3>
+<p><strong>Per i lettori del libro:</strong></p>
+<ol>
+<li>Trova il riferimento nel libro (es: "Catasto di Lanciano del 1618")</li>
+<li>Cerca il documento corrispondente in questa pagina</li>
+<li>Clicca sul link per visualizzare o scaricare il documento</li>
+<li>Chiudi il documento cliccando sull'area di colore nero ai margini dello stesso</li>
+</ol>
+</div><div class="main-content" style="padding-left: 20px;"> 
+
+<section class="section" id="catasti-onciari">
+<h2>📋 Catasti onciari</h2>
+<h3>1743-47 Catasto del Regno di Napoli</h3>
+<div id="catastiNapoliContainer" class="list-container">
+    </div>
+<h3>1618 Catasto del Comune di Lanciano</h3>
+<div id="catastiLancianoContainer" class="list-container">
+    </div>
+</section>
+
+<section class="section" id="altre-fonti-storiche">
+<h2>📚 Altre fonti storiche</h2>
+<div id="altreFontiContainer" class="list-container">
+</div>
+
+<section class="section" id="documenti-vari-link">
+</section>
+  <h2>📑 Documenti vari/Link</h2>
+  <div id="documentiVariLinkContainer" class="list-container"></div>
+</section>
+
+<section class="section" id="atti-notarili-700">
+      <h2>📜 Atti notarili del '700</h2>
+      <div id="atti-container"></div>
+      <div id="elencoAttiNotarili"></div>
+      <h3 id="titoloAtto"></h3>
+      <div id="galleria"></div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <p><strong>I Romagnoli frentani - Evidenze storiche e spunti di ricerca</strong><br />
+      © 2025 Federico Romagnoli. Tutti i diritti riservati.</p>
+    </div>
+  </footer>
+
+<!-- Overlay per immagini ingrandite -->
+<div id="imageOverlay" aria-hidden="true" role="dialog" tabindex="-1">
+  <img id="overlayImg" src="" alt="Immagine ingrandita" />
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const elenco = document.getElementById('elencoAttiNotarili');
+  const overlay = document.getElementById('imageOverlay');
+  const overlayImg = document.getElementById('overlayImg');
+
+  // Stato zoom/pan
+  let scale = 1;
+  const minScale = 1;
+  const maxScale = 6;
+  let posX = 0, posY = 0;
+
+  // Stato pointer (drag)
+  let isPointerDown = false;
+  let pointerStartX = 0, pointerStartY = 0;
+  let startPosX = 0, startPosY = 0;
+
+  function updateTransform() {
+    overlayImg.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+  }
+
+// ----- helper: costruisce un path sicuro UTF-8 codificando ogni segmento -----
+function buildSafePath(baseFolder, cartella, filename) {
+  // cartella potrebbe già contenere slash (o essere vuota)
+  const segments = [];
+  if (cartella && cartella.length) {
+    // split su slash e codifica ogni segmento
+    cartella.split('/').forEach(s => {
+      if (s && s.length) segments.push(encodeURIComponent(s));
+    });
+  }
+  // filename può essere undefined/null per casi particolari
+  if (filename && filename.length) segments.push(encodeURIComponent(filename));
+  // ricostruisci il path con slash non codificate
+  return `${baseFolder}/${segments.join('/')}`.replace(/%2F/g, '/');
+}
+
+  function openOverlay(src) {
+    overlayImg.src = src;
+    scale = 1; posX = 0; posY = 0;
+    updateTransform();
+    overlay.classList.add('active');
+    overlay.style.display = 'flex';
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeOverlay() {
+  overlayImg.blur(); // <-- aggiungi questa riga PRIMA di nascondere
+  overlay.classList.remove('active');
+  overlay.style.display = 'none';
+  overlayImg.src = '';
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+  // Chiudi overlay al click
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeOverlay();
+  });
+
+  // Zoom con rotella
+  overlay.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = Math.sign(e.deltaY);
+    if (delta < 0 && scale < maxScale) scale += 0.2;
+    if (delta > 0 && scale > minScale) scale -= 0.2;
+    updateTransform();
+  });
+
+  // Drag dell'immagine
+  overlayImg.addEventListener('pointerdown', (e) => {
+    isPointerDown = true;
+    pointerStartX = e.clientX;
+    pointerStartY = e.clientY;
+    startPosX = posX;
+    startPosY = posY;
+  });
+  overlayImg.addEventListener('pointerup', () => { isPointerDown = false; });
+  overlayImg.addEventListener('pointermove', (e) => {
+    if (!isPointerDown) return;
+    posX = startPosX + (e.clientX - pointerStartX);
+    posY = startPosY + (e.clientY - pointerStartY);
+    updateTransform();
+  });
+
+
+// Rileva pinch-to-zoom su dispositivi touch
+let lastTouchDistance = 0;
+
+overlayImg.addEventListener('touchmove', (ev) => {
+  if (ev.touches.length === 2) {
+    const dx = ev.touches[0].pageX - ev.touches[1].pageX;
+    const dy = ev.touches[0].pageY - ev.touches[1].pageY;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+
+    if (lastTouchDistance) {
+      const delta = dist - lastTouchDistance;
+      if (Math.abs(delta) > 5) {
+        scale += delta * 0.005; // sensibilità zoom
+        scale = Math.min(Math.max(scale, minScale), maxScale);
+        updateTransform();
+      }
+    }
+    lastTouchDistance = dist;
+    ev.preventDefault();
+  }
+}, { passive: false });
+
+overlayImg.addEventListener('touchend', () => {
+  lastTouchDistance = 0;
+});
+
+
+  // ==========================================================
+  // 1. ATTI NOTARILI (atti.json)
+  // ==========================================================
+  fetch('atti.json')
+    .then(res => { if (!res.ok) throw new Error('Impossibile caricare atti.json'); return res.json(); })
+    .then(data => {
+      data.forEach(atto => {
+        const div = document.createElement('div');
+        div.className = 'atto';
+
+        const titoloDiv = document.createElement('div');
+        titoloDiv.textContent = atto.titolo;
+        titoloDiv.style.cursor = 'pointer';
+
+        const galleria = document.createElement('div');
+        galleria.className = 'galleria-attuale';
+        galleria.style.display = 'none';
+
+        titoloDiv.onclick = () => {
+          galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
+          if (galleria.childElementCount === 0 && Array.isArray(atto.immagini)) {
+            atto.immagini.forEach(img => {
+              const imgElem = document.createElement('img');
+              imgElem.src = buildSafePath('atti_del_700', atto.cartella, img);
+              imgElem.alt = atto.titolo || '';
+              imgElem.style.maxWidth = '150px';
+              imgElem.style.margin = '5px';
+              imgElem.style.cursor = 'zoom-in';
+              imgElem.onclick = () => openOverlay(imgElem.src);
+              galleria.appendChild(imgElem);
+            });
+          }
+        };
+
+        div.appendChild(titoloDiv);
+        div.appendChild(galleria);
+        elenco.appendChild(div);
+      });
+    })
+    .catch(err => console.error("Errore atti.json:", err));
+
+
+  // ==========================================================
+  // 2. FUNZIONE GENERICA per CATASTI e ALTRE FONTI
+  // ==========================================================
+function generateCatastoList(dataArray, containerId, baseFolder = 'catasti_onciari') {
+  const container = document.getElementById(containerId);
+  if (!container || !Array.isArray(dataArray)) return;
+  container.innerHTML = '';
+
+  const isImageFile = (name) => /\.(jpe?g|png|gif|webp|bmp)$/i.test(name);
+  const isPdfFile = (name) => /\.pdf$/i.test(name);
+  const isExternalLink = (name) => /^https?:\/\//i.test(name);
+
+  dataArray.forEach(atto => {
+    const div = document.createElement('div');
+    div.className = 'atto';
+
+    const titoloDiv = document.createElement('div');
+    titoloDiv.textContent = atto.titolo;
+    titoloDiv.style.cursor = 'pointer';
+
+    const files = Array.isArray(atto.immagini) ? atto.immagini : [];
+    const numFiles = files.length;
+
+    if (numFiles > 0) {
+      const galleria = document.createElement('div');
+      galleria.className = 'galleria-attuale';
+      galleria.style.display = 'none';
+
+      titoloDiv.innerHTML = `${atto.titolo} <span style="font-size:0.8em; color:#777;">(espandi ${numFiles} elementi)</span>`;
+      titoloDiv.onclick = () => {
+        galleria.style.display = (galleria.style.display === 'none') ? 'block' : 'none';
+
+        if (galleria.childElementCount === 0) {
+          files.forEach(file => {
+            let encodedPath = '';
+            if (isExternalLink(file)) {
+              // URL esterno (non viene concatenato con baseFolder)
+              encodedPath = file;
+            } else {
+  encodedPath = buildSafePath(baseFolder, atto.cartella, file);
+}
+
+            // --- Gestione dei vari tipi ---
+            if (isPdfFile(file)) {
+              const link = document.createElement('a');
+              link.href = encodedPath;
+              link.textContent = '📄 ' + file;
+              link.target = '_blank';
+              link.rel = 'noopener noreferrer';
+              link.style.display = 'block';
+              link.style.margin = '6px 5px';
+              galleria.appendChild(link);
+            } else if (isImageFile(file)) {
+              const imgElem = document.createElement('img');
+              imgElem.src = encodedPath;
+              imgElem.alt = atto.titolo || '';
+              imgElem.style.maxWidth = '150px';
+              imgElem.style.margin = '5px';
+              imgElem.style.cursor = 'zoom-in';
+              imgElem.onclick = () => openOverlay(imgElem.src);
+              galleria.appendChild(imgElem);
+            } else if (isExternalLink(file)) {
+              const extLink = document.createElement('a');
+              extLink.href = file;
+              extLink.textContent = '🔗 Link esterno';
+              extLink.target = '_blank';
+              extLink.rel = 'noopener noreferrer';
+              extLink.style.display = 'block';
+              extLink.style.margin = '6px 5px';
+              galleria.appendChild(extLink);
+            } else {
+              const otherLink = document.createElement('a');
+              otherLink.href = encodedPath;
+              otherLink.textContent = '📁 ' + file;
+              otherLink.target = '_blank';
+              otherLink.rel = 'noopener noreferrer';
+              otherLink.style.display = 'block';
+              otherLink.style.margin = '6px 5px';
+              galleria.appendChild(otherLink);
+            }
+          });
+        }
+      };
+
+      div.appendChild(titoloDiv);
+      div.appendChild(galleria);
+    } else {
+      titoloDiv.innerHTML = `${atto.titolo} <span style="color:red;">(Nessun file trovato)</span>`;
+      div.appendChild(titoloDiv);
+    }
+
+    container.appendChild(div);
+  });
+}
+
+
+  // ==========================================================
+  // 3. CATASTI ONCIARI (catasti.json)
+  // ==========================================================
+  fetch('catasti.json')
+    .then(res => { if (!res.ok) throw new Error('Impossibile caricare catasti.json'); return res.json(); })
+    .then(data => {
+      const catastoLanciano = data[0];
+      const catastoNapoli = data[1];
+      if (catastoNapoli && catastoNapoli.gruppi) generateCatastoList(catastoNapoli.gruppi, 'catastiNapoliContainer');
+      if (catastoLanciano && catastoLanciano.gruppi) generateCatastoList(catastoLanciano.gruppi, 'catastiLancianoContainer');
+    })
+    .catch(err => console.error("Errore catasti.json:", err));
+
+
+  // ==========================================================
+  // 4. ALTRE FONTI STORICHE (altre_fonti.json)
+  // ==========================================================
+  const BASE_FOLDER_ALTRE_FONTI = 'altre_fonti_storiche'; // cambia se la cartella ha altro nome
+
+  fetch('altre_fonti.json')
+    .then(res => { if (!res.ok) throw new Error('Impossibile caricare altre_fonti.json'); return res.json(); })
+    .then(data => {
+      const container = document.getElementById('altreFontiContainer');
+      if (!container || !Array.isArray(data)) return;
+
+      data.forEach(item => {
+        const h3 = document.createElement('h3');
+        h3.textContent = item.titolo;
+        container.appendChild(h3);
+
+        if (item.sottotitolo) {
+          const p = document.createElement('p');
+          p.innerHTML = `<em>${item.sottotitolo}</em>`;
+          container.appendChild(p);
+        }
+
+        const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
+        const actDiv = document.createElement('div');
+        actDiv.id = actDivId;
+        actDiv.className = 'list-container';
+        container.appendChild(actDiv);
+
+        generateCatastoList([{
+          titolo: item.titolo,
+          cartella: item.cartella,
+          immagini: item.immagini
+        }], actDivId, BASE_FOLDER_ALTRE_FONTI);
+      });
+    })
+    .catch(err => console.error("Errore altre_fonti.json:", err));
+
+
+// ==========================================================
+// 5. DOCUMENTI VARI E LINK (documenti_vari_link.json)
+// ==========================================================
+const BASE_FOLDER_DOCUMENTI_VARI = 'documenti_vari_link';
+
+fetch('documenti_vari_link.json')
+  .then(res => {
+    if (!res.ok) throw new Error('Impossibile caricare documenti_vari_link.json');
+    return res.json();
+  })
+  .then(data => {
+    const container = document.getElementById('documentiVariLinkContainer');
+    if (!container || !Array.isArray(data)) return;
+
+    data.forEach(item => {
+      // 1. TITOLO PRINCIPALE (non cliccabile)
+      const h3 = document.createElement('h3');
+      h3.textContent = item.titolo;
+      // Rimosso: h3.style.cursor = 'pointer'; per eliminare la manina sul titolo h3
+      container.appendChild(h3);
+
+      if (item.sottotitolo) {
+        const p = document.createElement('p');
+        p.innerHTML = `<em>${item.sottotitolo}</em>`;
+        container.appendChild(p);
+      }
+
+      // --- LOGICA DI DISTINZIONE ---
+      const isExternalLinkSection = item.immagini.length > 0 && typeof item.immagini[0] === 'object';
+      
+      if (isExternalLinkSection) {
+          // GESTIONE DEI LINK ESTERNI (OGGETTI) con menù a tendina
+          
+          const numLink = item.immagini.length;
+          
+          // 2. CONTENITORE NASCOSTO (La tendina)
+          const ul = document.createElement('ul');
+          ul.className = 'links-dropdown'; 
+          ul.style.listStyleType = 'disc';
+          ul.style.marginLeft = '20px';
+          ul.style.paddingLeft = '0';
+          ul.style.display = 'none'; // NASCONDI INIZIALMENTE
+
+          // 3. DIV CLICCABILE (l'elemento che ha la manina)
+          const dropDiv = document.createElement('div');
+          dropDiv.innerHTML = `${item.titolo} <span style="font-size:0.8em; color: #777;">(espandi ${numLink} link)</span>`;
+          dropDiv.style.cursor = 'pointer'; // La manina va solo qui!
+          container.appendChild(dropDiv);
+
+          // Aggiungiamo l'handler per l'espansione al click sul dropDiv
+          dropDiv.onclick = () => {
+             ul.style.display = (ul.style.display === 'none') ? 'block' : 'none';
+          };
+
+          item.immagini.forEach(linkObj => {
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              
+              a.href = linkObj.url;
+              a.target = '_blank';
+              a.textContent = linkObj.nome; 
+              a.style.textDecoration = 'underline'; 
+              a.style.color = 'blue';
+
+              li.style.marginBottom = '5px';
+              
+              li.appendChild(a);
+              ul.appendChild(li);
+          });
+          container.appendChild(ul);
+      
+      } else {
+          // GESTIONE DEI PDF E IMMAGINI (STRINGHE) tramite generateCatastoList
+          const actDivId = `doc-${item.titolo.replace(/[^a-zA-Z0-9]/g, '')}`;
+          const actDiv = document.createElement('div');
+          actDiv.id = actDivId;
+          actDiv.className = 'list-container';
+          container.appendChild(actDiv);
+
+          generateCatastoList(
+            [
+              {
+                titolo: item.titolo,
+                cartella: item.cartella,
+                immagini: item.immagini
+              }
+            ],
+            actDivId,
+            BASE_FOLDER_DOCUMENTI_VARI
+          );
+      }
+    });
+  })
+  .catch(err => console.error('Errore documenti_vari_link.json:', err));
+
+
+  // ==========================================================
+  // 6. EVENT DELEGATION - click su miniature
+  // ==========================================================
+  document.addEventListener('click', (ev) => {
+    const img = ev.target.closest && ev.target.closest('img');
+    const validContainers = '#elencoAttiNotarili, #catastiNapoliContainer, #catastiLancianoContainer, #galleria, #altreFontiContainer';
+    const isInside = img && ev.target.closest(validContainers);
+    if (img && isInside) {
+      ev.preventDefault();
+      openOverlay(img.src);
+    }
+  });
+});
+</script>
+
+
+</body>
+</html>
